@@ -1,0 +1,76 @@
+
+ 
+<div class="basic-2 gap_section">
+    <div class="container">
+        <div class="row">
+          <div class="col-lg-1 col-xl-1">
+          </div>
+            <div class="col-lg-5 col-xl-5">
+                <div class="text-container trigt-txt">
+                    <h2>{{ section.settings.coco_right_txt}}</h2>
+                    <div class="orng-line care-orng-line"><img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/abt-2_0549dbb8-f833-44e3-87a3-f6e3c0874398.png?v=1629185024" alt="alternative"></div>
+                    {{ section.settings.coco_right_description}}
+                  
+                </div> <!-- end of text-container -->
+            </div>
+            
+            <div class="col-lg-6 col-xl-6">
+                <div class="image-container">
+                  {% if section.settings.coco_right_images != blank %}
+                   <img  class="img-fluid" src="{{section.settings.coco_right_images | img_url:'master'}}" alt="alternative">
+                  {% else %}
+                    <img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/coll-03.png?v=1629184993" alt="alternative">
+              	{% endif %}	 
+              </div> <!-- end of image-container -->
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+    
+</div>
+<div class="marg100"></div>
+
+{% schema %}
+  {
+    "name": " Coconut Text With Image",
+    "settings": [
+		{
+			"type": "text",
+			"id" :"coco_right_txt",
+			"label":"Heading",
+			"default":"SPEAKING OUR LOVE <br>LANGUAGE"
+		},
+		{
+			"type": "richtext",
+			"id" :"coco_right_description",
+			"label":"Sub-description",
+			"default":"<p>You know that funny look you get when someone who’s never had a pet sees you talking to your fur baby? What would surprise them even more... is the fact that our pets talk back. Obviously not in English, but in their behavior and their spirit. What we put in, is what we get out. Which is why we’ll never understand giving cheap, subpar products to the ones you love most. Discover the Petmont difference.</p>"
+		},
+		{
+			"type": "text",
+			"id" :"coco_btn_txts",
+			"label":"Button",
+			"default":"shop now"
+		},
+		{
+			"type": "url",
+			"id" :"coco_btn_urls",
+			"label":"Add Button URl"
+			
+		},
+		{
+			"type": "image_picker",
+			"id" :"coco_right_images",
+			"label":"Add Right Image"
+		}
+		
+	]
+   
+	
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

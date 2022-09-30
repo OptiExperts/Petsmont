@@ -1,0 +1,77 @@
+<div id="details" class="basic-1">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-xl-6">
+                    <div class="image-container">
+                      {% if section.settings.left_image  != blank %}
+                      <img class="img-fluid" src="{{section.settings.left_image | img_url:"master"}}" alt="alternative">
+                      {% else %}
+                        <img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/home2.png?v=1629182714" alt="alternative">
+ 					{% endif %}
+                      <a class="btn-solid-reg d-block d-sm-none" href="{{ section.settings.btn_url}}">{{ section.settings.btn_txt | upcase}}</a>
+                  </div>
+                </div> <!-- end of col -->
+                <div class="col-lg-6 col-xl-6">
+                    <div class="text-container">
+                        <div class="section-title">
+					</div>
+                        <h2>{{ section.settings.right_txt}}</h2>
+						<div class="orng-line love-orng-lines"><img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/abt-2_db455a32-64f4-46a0-aad9-cc6db4ad7652.png?v=1629184644" alt="alternative"></div>
+                        {{section.settings.left_description}}
+                      <a class="btn-solid-reg d-none d-sm-block" href="{{ section.settings.btn_url}}">{{ section.settings.btn_txt | upcase}}</a>
+                    </div> <!-- end of text-container -->
+                </div> <!-- end of col -->
+            </div> <!-- end of row -->
+        </div> <!-- end of container -->
+		
+
+    </div>
+{% schema %}
+  {
+    "name": "Right Start",
+    "settings": [
+		{
+			"type": "image_picker",
+			"id" :"left_image",
+			"label":"Add Left Image"
+		},
+		{
+			"type": "text",
+			"id" :"right_txt",
+			"label":"Text Heading",
+			"default":"<h2>RIGHT FROM THE <br>START</h2>"
+		},
+		{
+			"type": "richtext",
+			"id" :"left_description",
+			"label":"Add Description",
+			"default":"<p>Traceability is key to what makes Petsmont products so special. This includes knowing where each and every ingredient in our products come from, how it’s grown, the farm’s sustainability, how they pay and treat their workers… everything.</p>"
+			},
+		{
+			"type": "text",
+			"id" :"btn_txt",
+			"label":"Button",
+			"default":"shop now"
+		},
+		{
+			"type": "url",
+			"id" :"btn_url",
+			"label":"Add Button URl"
+			
+		}
+		
+	],
+	"presets": [
+      {
+        "name": "Home Right Start",
+        "category": "Home Right Start"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

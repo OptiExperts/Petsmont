@@ -1,0 +1,78 @@
+<div class="bg-img15">
+    <div class="container">
+        <div class="row">
+           <div class="col-lg-6 col-xl-6 order-lg-1 order-1">
+                <div class="text-container light-orngbox ligt-title">
+                    <h2>{{ section.settings.salmon_head_text | upcase }}</h2>
+                    <div class="orng-line reasion-orng-line"><img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/brownline.png?v=1629185630" alt="alternative"></div>
+                  {% for block in section.blocks %} 
+                  <ul class="reason_pet">
+                    <li><img src="{{ block.settings.salmon_num_img | img_url:'master'}}"/></li>
+                   
+                      <li class="li-text">{{ block.settings.salmon_num_text}}</li>
+                    </ul>
+                  {% endfor %}
+
+                  
+                   </div> 
+            </div> 
+           
+           
+          <div class="col-lg-6 col-xl-6 order-lg-2 order-1">
+                <div class="image-container">
+                  {% if section.settings.salmon_reasons_img != blank %}
+                  	<img class="img-fluid" src="{{ section.settings.salmon_reasons_img | img_url:"master"}}" alt="alternative">
+                  {% else %}
+                  	<img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/pro-3.png?v=1629812098" alt="alternative">
+                  {% endif %}  
+              </div> <!-- end of image-container -->
+            </div>
+           
+         
+        </div> <!-- end of row -->
+    </div>
+
+</div>
+{% schema %}
+  {
+    "name": "Salmon Reasons",
+    "settings": [
+		 {
+           "type":"text",
+           "id":"salmon_head_text",
+            "label":"Heading",
+			"default":"5 REASONS WHY YOUR PET WILL LOVE IT:"
+         },
+        {
+           "type":"image_picker",
+           "id":"salmon_reasons_img",
+           "label":"Select Image"	
+        }
+
+	],
+    "blocks":[
+        {
+            "name":"REASONS",
+            "type":"reasons",
+            "settings":[
+                {
+                  "type":"image_picker",
+                  "id":"salmon_num_img",
+                  "label":"Select Number"
+                },
+                {
+                  "type":"text",
+                  "id":"salmon_num_text",
+                  "label":"content"
+                }
+            ]
+        }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

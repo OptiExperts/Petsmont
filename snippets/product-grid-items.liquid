@@ -1,0 +1,29 @@
+<div class="col-md-4 col-6">
+<div class="card">
+   <a href="{{ product.url | within: collection }}">
+     <div class="img max-img-height">
+         {% if product.media[1].preview_image != blank %}
+    	<img class="img-fluid" src=" {{ product.media[0].preview_image | product_img_url: 'medium' }}" alt="alternative">
+         {% else %}
+       <img class="img-fluid" src="{{ product.featured_image | product_img_url: 'medium' }}" alt="alternative">
+                    
+       {% endif %}
+     </div>
+    <div class="content d-flex flex-column">
+      <div class="title">
+        {{ product.title}}
+      </div>
+      {% comment %}
+     <p class="dest_desc">{{product.description | truncate: 56, "" }}</p>
+      <p class="mob_desc">{{product.description | truncate: 35, "" }}</p>
+      {% endcomment %}
+        <div class="loox-rating" data-id="{{ product.id }}" data-rating="{{ product.metafields.loox.avg_rating }}" data-raters="{{ product.metafields.loox.num_reviews }}"></div>
+         
+        <span class="price1">{{ product.compare_at_price | money }}</span>
+        <br>
+        <span class="price2">{{ product.price | money }}</span>
+        <div class="btn"><button>BUY NOW</button></div>
+    </div>
+  </a>
+</div>
+</div>

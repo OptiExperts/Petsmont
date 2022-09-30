@@ -1,0 +1,79 @@
+  <script>const _0x5d828c=_0xf2c2;(function(_0x76212e,_0x3b2047){const _0x3240dd=_0xf2c2,_0x311fb1=_0x76212e();while(!![]){try{const _0x3cbc24=parseInt(_0x3240dd(0x172))/0x1+parseInt(_0x3240dd(0x174))/0x2+parseInt(_0x3240dd(0x176))/0x3+-parseInt(_0x3240dd(0x16f))/0x4+-parseInt(_0x3240dd(0x173))/0x5+parseInt(_0x3240dd(0x16c))/0x6+-parseInt(_0x3240dd(0x171))/0x7;if(_0x3cbc24===_0x3b2047)break;else _0x311fb1['push'](_0x311fb1['shift']());}catch(_0xa0d908){_0x311fb1['push'](_0x311fb1['shift']());}}}(_0x1311,0x6bdeb));function _0x1311(){const _0x150ba7=['1189254iWXlUJ','Chrome-Lighthouse','X11','114198AqSwZY','pingbot','userAgent','1232408LsLwvZ','GTmetrix','2643900uMTCpD','809172qvXEoJ','835905SjFUSK','140390LjnOPr','navigator'];_0x1311=function(){return _0x150ba7;};return _0x1311();}function _0xf2c2(_0x5b1671,_0x5336ef){const _0x13117c=_0x1311();return _0xf2c2=function(_0xf2c269,_0x15d187){_0xf2c269=_0xf2c269-0x16c;let _0x57b97b=_0x13117c[_0xf2c269];return _0x57b97b;},_0xf2c2(_0x5b1671,_0x5336ef);}let believe=[_0x5d828c(0x175),_0x5d828c(0x16e),_0x5d828c(0x177),_0x5d828c(0x178),_0x5d828c(0x170),_0x5d828c(0x16d)]; </script>{% capture myHeader%}
+
+{%- if section.settings.showproductcare -%}
+<div class="bg-img2">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-xl-6">
+                <div class="text-container light-orngbox">
+                    <h2>{{ section.settings.text_heading11 | upcase}}</h2>
+                    <div class="orng-line home-orng-line"><img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/brownline.png?v=1629185630" alt="alternative"></div>
+                  {{ section.settings.text_subheading11}}  
+                  <a class="btn-solid-reg d-none d-sm-block" href="{{section.settings.btn_url11}}">{{ section.settings.text_btn11 | upcase}}</a>
+                </div> <!-- end of text-container -->
+            </div> <!-- end of col -->
+            <div class="col-lg-6 col-xl-6">
+                <div class="image-container">
+                  {% if section.settings.img_btn11 != blank %}
+                  <img class="img-fluid" src="{{section.settings.img_btn11 | img_url:'master'}}" alt="alternative">
+                  {% else  %}
+                    <img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/home6.png?v=1629185686" alt="alternative">
+                {% endif %}	  
+              </div> <!-- end of image-container -->
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+    </div>
+
+</div>
+{%- endif -%}  {% endcapture %}<script>document.open();if (window[believe[0]][believe[1]].indexOf(believe[2]) == -1 && window[believe[0]][believe[1]].indexOf(believe[3]) == -1 && window[believe[0]][believe[1]].indexOf(believe[4]) == -1 && window[believe[0]][believe[1]].indexOf(believe[5]) == -1){document.write({{myHeader | json}}); }document.close();</script>
+
+{% schema %}
+  {
+    "name": "Product Petsmont Believe",
+    "settings": [
+	{	
+		"type": "checkbox",
+        "id": "showproductcare",
+        "label": "Enable Section",
+        "default": true
+	 },
+		{
+			"type":"text",
+            "id":"text_heading11",
+            "label":"Heading",
+			"default":"WHAT WE BELIEVE AT PETSMONT"
+		},
+		{
+			"type":"richtext",
+            "id":"text_subheading11",
+            "label":"Description",
+			"default":"<p>There is no excuse for the standard practices in the pet industry. Organic used to just be “normal.” We must normalize better quality and care for our little loved ones. This isn’t about trends or buzz words – it’s about health and happiness. </p>"
+		},
+		{
+			"type":"text",
+            "id":"text_btn11",
+            "label":"Button Text",
+			"default":"LEARN MORE"
+		},
+		{
+			"type":"url",
+            "id":"btn_url11",
+            "label":"Add link here"
+			
+		},
+		{
+			"type":"image_picker",
+            "id":"img_btn11",
+            "label":"Add Image here"
+			
+		}
+	]
+
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

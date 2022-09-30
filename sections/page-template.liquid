@@ -1,0 +1,38 @@
+<header class="ex-header">
+   <div class="container">
+      <div class="row">
+          <div class="col-xl-10 offset-xl-1">
+                <h1>{{ page.title }}</h1>
+           </div> 
+      </div> 
+  </div>
+</header>
+<div class="ex-basic-1 pt-5 pb-5">
+  <div class="container">
+     <div class="row">
+          {{ page.content }}
+     </div>
+  </div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "Page",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Header image"
+      },
+      {
+        "type": "paragraph",
+        "content": "Shown on all standard pages"
+      },
+      {
+        "type": "image_picker",
+        "id": "header_image",
+        "label": "Image"
+      }
+    ]
+  }
+{% endschema %}

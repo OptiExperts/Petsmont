@@ -1,0 +1,98 @@
+<div class="marg100"></div>
+<div class="basic-2">
+    <div class="container">
+        <div class="row">
+          <div class="col-lg-1 col-xl-1">
+          </div>
+            <div class="col-lg-5 col-xl-5">
+                <div class="text-container">
+                    <h2 class="for_mobile">{{ section.settings.right_txt}}</h2>
+                    <div class="orng-line love-orng-line"><img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/abt-2_0549dbb8-f833-44e3-87a3-f6e3c0874398.png?v=1629185024" alt="alternative"></div>
+                  <span class="my_mobile"> {{ section.settings.right_description}}</span>
+                  <a class="btn-solid-reg d-none d-sm-block" href="{{section.settings.btn_urls}}">{{section.settings.btn_txts | upcase}}</a>
+                </div> <!-- end of text-container -->
+            </div>
+            
+            <div class="col-lg-6 col-xl-6 mobile_img">
+                <div class="image-container">
+                  {% if section.settings.right_images != blank %}
+                   <img  class="img-fluid" src="{{section.settings.right_images | img_url:'master'}}" alt="alternative">
+                  {% else %}
+                    <img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/coll-03.png?v=1629184993" alt="alternative">
+              	{% endif %}	 
+                  <a class="btn-solid-reg d-block d-sm-none" href="{{section.settings.btn_urls}}">{{section.settings.btn_txts | upcase}}</a>
+              </div> <!-- end of image-container -->
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+    <div class="dog-img-1">
+      {% if section.settings.bottem_images != blank %}
+      <img class="img-fluid" src="{{section.settings.bottem_images | img_url:'master'}}" alt="alternative">
+	
+      {% else %}
+			<img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/home5.png?v=1629184967" alt="alternative">
+	{% endif %}
+  </div>
+</div>
+<div class="marg100"></div>
+
+{% schema %}
+  {
+    "name": "Text With Image",
+    "settings": [
+		{
+			"type": "text",
+			"id" :"right_txt",
+			"label":"Heading",
+			"default":"SPEAKING OUR LOVE <br>LANGUAGE"
+		},
+		{
+			"type": "richtext",
+			"id" :"right_description",
+			"label":"Sub-description",
+			"default":"<p>You know that funny look you get when someone who’s never had a pet sees you talking to your fur baby? What would surprise them even more... is the fact that our pets talk back. Obviously not in English, but in their behavior and their spirit. What we put in, is what we get out. Which is why we’ll never understand giving cheap, subpar products to the ones you love most. Discover the Petmont difference.</p>"
+		},
+		{
+			"type": "text",
+			"id" :"btn_txts",
+			"label":"Button",
+			"default":"shop now"
+		},
+		{
+			"type": "url",
+			"id" :"btn_urls",
+			"label":"Add Button URl"
+			
+		},
+		{
+			"type": "image_picker",
+			"id" :"right_images",
+			"label":"Add Right Image"
+		},
+		{
+			"type": "image_picker",
+			"id" :"bottem_images",
+			"label":"Bottem Left Image"
+		},
+		{
+			"type": "text",
+			"id" :"nxt_heads",
+			"label":"Heading",
+			"default" : "AS SEEN ON"
+		}
+	],
+    
+	"presets": [
+      {
+        "name": "Home Text With Image",
+        "category": "Home Text With Image"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

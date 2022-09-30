@@ -1,0 +1,66 @@
+<div class="cards-2 bg-img3">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 class="h2-heading grey-text">{{section.settings.text_blog | upcase}}</h2>
+					<div class="brown-line recipe-brown-line"><img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/brown-line1.png?v=1629186609" alt="alternative"></div>
+                </div> 
+            </div> 
+            <div class="row">
+                <div class="col-lg-12 testimonila_sliders">
+
+                    <!-- Card -->
+                  {% assign blog = blogs[section.settings.blog] %}
+                    {%- for article in blog.articles limit: 3  -%}
+                    
+					<div class="trans-div1">
+                    <div class="card orng-bg">
+					<div class="quote-bg1">
+                        <img class="quotes" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/food-icon.png?v=1629391242" alt="alternative">
+						</div>
+                        <div class="card-body inner-bg1">
+						<img class="img-fluid recipe-height" src="{{ article.image.src | img_url: 'master' }}" alt="alternative">
+						{%- assign article = blog.articles -%}
+                          <div class="testimonial-author">{{ article.title | strip_html | truncatewords: 4, ""| link_to: article.url }}</div>
+                            <p class="testimonial-text">{{ article.content | strip_html | truncatewords: 4, "" }}</p>
+                          <div class="btn1">
+                            <a href="{{ article.url }}"><button tabindex="0">READ MORE</button></a>
+                          </div>
+                      </div>
+                    </div>
+					</div>
+                  {% endfor %}  
+                </div> <!-- end of col -->
+            </div> <!-- end of row -->
+        </div> <!-- end of container -->
+    </div>
+{% schema %}
+  {
+    "name": "Home Recipes Blogs",
+    "settings": [
+		{
+		   "type":"text",
+            "id":"text_blog",
+            "label":"Heading",
+			"default":"Delicious, healthy recipes"
+		},
+		{
+		   "type":"blog",
+            "id":"blog",
+            "label":"blog"
+		}
+	],
+	"presets": [
+      {
+        "name": "Home Recipes",
+        "category": "Home Recipes"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

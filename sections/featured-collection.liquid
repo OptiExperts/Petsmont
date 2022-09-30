@@ -1,0 +1,66 @@
+<div class="slider-bg ff">
+  <div class="container">
+{%- assign collection = collections[section.settings.collection] -%}
+{%- assign max_products = 12 -%}<div class="homepage-products container" data-section-type="featured-collection">
+ <h2>{{ collection.title}}</h2>
+  <div class="slider owl-carousel">
+    {% unless section.settings.collection == blank %}
+      {% for product in collection.products limit: max_products %}
+        {% include 'product-grid-item' %}
+      {% endfor %}
+    {% else %}
+      {% for product in (1..max_products) %}
+        {% include 'onboarding-product-grid-item' %}
+      {% endfor %}
+    {% endunless %}
+  </div>
+
+  {% if section.settings.cta_text != blank %}
+    <div class="spaced-row align-center">
+      <a class="button button--alt" href="{{ collection.url }}">{{ section.settings.cta_text }}</a>
+    </div>
+  {% endif %}
+</div>
+</div>
+</div>
+{% schema %}
+  {
+    "name": "Featured collection",
+    "class": "section--collection section--upper-space-req",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Featured collection"
+      },
+      {
+        "type": "collection",
+        "id": "collection",
+        "label": "Collection"
+      },
+      {
+        "type": "range",
+        "id": "products_per_row_int",
+        "min": 2,
+        "max": 5,
+        "step": 1,
+        "label": "Number of products per row",
+        "default": 4
+      },
+     
+      {
+        "type": "text",
+        "id": "cta_text",
+        "label": "Button text",
+        "default": "See more"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Featured collection",
+        "category": "Collection"
+      }
+    ]
+  }
+{% endschema %}

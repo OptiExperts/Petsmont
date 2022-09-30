@@ -1,0 +1,213 @@
+ <div id="main" class="content-main" role="main">
+      {% if section.settings.show_tags and blog.all_tags.size > 0 %}
+        <div class="mobile-filter-reveal align-center">
+          <div class="mobile-filter-reveal__inner">
+            <a href="#" class="feature-link filter-toggle-button">{{ 'blogs.tags.mobile_reveal' | t }}</a>
+          </div>
+        </div>
+
+        <div class="filters">
+          <div class="filters__inner">
+            <span class="filter">
+              <label for="filter-tag">{{ 'blogs.tags.label' | t }}</label>
+              <select id="filter-tag">
+                <option value="{{ blog.url }}">{{ 'blogs.tags.all' | t }}</option>
+                {%- for tag in blog.all_tags -%}
+                  <option value="{{ blog.url }}/tagged/{{ tag | handle }}" {% if current_tags contains tag %}selected{% endif %}>{{ tag }}</option>
+                {%- endfor -%}
+              </select>
+            </span>
+          </div>
+        </div>
+      {% endif %}
+      
+   <!--
+   <div id="details" class="basic-1">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-xl-6">
+                    <div class="image-container">
+                      {% if blog.handle == "pets" %} 
+                      	{% for article in blog.articles limit:1 %}
+                      <a href="{{ article.url }}"><img style="width:100%" class="img-fluid" src="{{ article.image.src | image_url: width: 500}}" alt="alternative"></a>
+                      	{% endfor %}
+          			   {% elsif blog.handle == "recipes" %}
+                      	{% for article in blog.articles limit:1 %}
+                      <a href="{{ article.url }}"><img style="width:100%" class="img-fluid" src="{{ article.image.src | image_url: width: 500}}" alt="alternative"></a>
+                     	{% endfor %}
+                      {% endif %}
+                  </div> <!-- end of image-container --> <!--
+                  {% for article in blog.articles limit:1 %}
+                  <a class="btn-solid-lg d-block d-sm-none" href="{{ article.url }}" style="width:100%">READ MORE</a>
+                  {% endfor %}
+                </div> <!-- end of col -->  <!--
+                <div class="col-lg-6 col-xl-6">
+                  {% if blog.handle == "pets" %}
+                    {% for article in blog.articles limit:1 %}
+                    <div class="text-container blog-container">
+                      <h1><a href="{{ article.url }}">{{ article.title }}</a></h1>
+						<span class="tag-text1"><i class="far fa-calendar"></i>  {{ article.created_at | date: "%b %d, %y" }}</span>
+                      <span class="tag-text"><i class="fas fa-feather-alt"></i> by {{ article.author }} </span>
+                      
+                      <br><br>
+						
+                        {{ article.content | truncatewords:30}}
+                      <button class="none_border"><a class="btn-solid-lg d-none d-sm-block" href="{{ article.url}}" style="width:100%">READ MORE</a></button>
+                    </div>
+                  {% endfor %}
+                  {% elsif blog.handle == "recipes" %}
+                  {% for article in blog.articles  %}
+                  {% if forloop.first == true %}
+                    <div class="text-container blog-container">
+                        <h2>{{ article.title }}</h2>
+						<span class="tag-text1"><i class="far fa-calendar"></i>  {{ article.created_at | date: "%b %d, %y" }}</span>
+                      <span class="tag-text"><i class="fas fa-feather-alt"></i> by {{ article.author }} </span>
+                      
+                      <br><br>
+						
+                        <!--{{ article.content | truncatewords:68 }}-->  <!--
+                      <button class="none_border"><a class="btn-solid-lg d-none d-sm-block" href="{{ article.url}}" style="width:100%">READ MORE</a></button>
+                    </div>
+                  {% endif %}
+                  {% endfor %}
+                  {% endif %}
+                </div> <!-- end of col -->  <!--
+            </div> <!-- end of row --> <!--
+        </div> <!-- end of container -->  <!--
+		
+
+    </div>
+	-->
+<!--<div class="bg-img9">-->
+<div class="" style="background-color: #fcfcfc; padding-top: 30px;">
+<div class="container">
+ <div class="product_heading">
+  {% if blog.handle == "pets" %} <h2 class="h2-heading testing-head">Blog</h2>
+  {% else %} <h2 class="h2-heading testing-head">{{ blog.handle | capitalize }}</h2> {% endif %}
+  <img class="img-fluid orange_line-7" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/New_Project_9.png?v=1631037085" alt="alternative">
+ </div>
+  <!--
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+      {% assign blog-collection = linklists[section.settings.blog_collection] %}
+      {% for link in blog-collection.links %}
+          <li class="nav-item" role="presentation">
+            <a href="{{link.url}}" class="nav-link {% if  forloop.first == true %}active {% endif %}" id="all-tab" data-bs-toggle="tab" data-bs-target="#all" type="button" role="tab" aria-controls="all" aria-selected="true">{{ link.title | upcase}}</a>
+          </li>
+      {% endfor %}
+</ul>-->
+      {% paginate blog.articles by 6 %}
+  <!--<div class="mini-product">
+    <span class="mini-producttext">OUR PRODUCTS :</span>
+    <ul class="productname-text">
+      {% for product in collections.all.products limit:4 %}
+      <a href="{{product.url | within:collection}}">
+      <li>{{ product.title | upcase |truncatewords: 2 ,""}}</li>
+      </a>
+      {% endfor %}
+<!--       
+      <li>COCONUT</li>
+      <li>WILD ALASKAN FISH OIL</li> -->
+   <!-- </ul>
+    
+  </div> -->
+  <br>
+  
+   {% if blog.handle == "pets" %}
+   {% assign blog_handles = "pets" | split: "," %}
+    {% elsif blog.handle == "recipes" %}
+    {% assign blog_handles = "recipes" | split: "," %}
+ 	{% endif %}
+   {% for handle in blog_handles %}
+ <div class="row">
+        {% for article in blogs[handle].articles %}
+
+              <div class="col-md-4  d-flex align-items-stretch">
+            
+            {% if article.image != blank %}
+              <div class="card">
+                <div class="img blog_hehight">
+                  <a href="{{ article.url }}">
+                   <img class="img-fluid" src="{{ article.image.src | img_url: 'master' }}" alt="alternative">
+                  </a>
+                </div>
+                <div class="card-body d-flex flex-column">
+                <div class="content">
+                  <div class="title">
+                    <a href="{{ article.url }}">{{ article.title }}</a>
+                  </div>
+                  <span><i class="far fa-calendar"></i>  {{ article.created_at | date: "%b %d, %y" }}</span>
+                  <div class="btn"><a href="{{article.url}}"><button>READ MORE</button></a></div>
+                </div>
+                </div>
+              </div>
+            {% endif %}
+
+          </div>
+         {% endfor %}
+</div>
+  {% endfor %}
+  
+  
+  
+  
+
+        {% if paginate.pages > 1 %}
+          <div class="pagination">
+            {% comment %}
+            When paginating blog articles, a previous article is actually a newer article, not an older one,
+            because blog articles are shown and paginated in a reversed chronological order.
+            The word 'previous' can be confusing, hence we'll change it.
+            {% endcomment %}
+            {%- assign older_articles = 'blogs.pagination.older_articles' | t -%}
+            {%- assign newer_articles = 'blogs.pagination.newer_articles' | t -%}
+            {% include 'pagination', previous_text: newer_articles, next_text: older_articles %}
+          </div>
+        {% endif %}
+      {% endpaginate %}
+  </div>
+      </div>
+    </div>
+ 
+{% schema %}
+  {
+    "name": "Blog page",
+    "settings": [
+      {
+		"type" :"link_list",
+		"id":"blog_collection",
+		"label":"Blogs Collection"
+	  },
+      {
+        "type": "checkbox",
+        "id": "show_tags",
+        "label": "Show tags",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_author",
+        "label": "Show author",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_date",
+        "label": "Show published date",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Header image"
+      },
+      {
+        "type": "paragraph",
+        "content": "Shown on all blogs"
+      },
+      {
+        "type": "image_picker",
+        "id": "header_image",
+        "label": "Image"
+      }
+    ]
+  }
+{% endschema %}

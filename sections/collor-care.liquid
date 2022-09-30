@@ -1,0 +1,62 @@
+{%- if section.settings.showproductcare -%}
+<div id="details" class="basic-1">
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-6 col-xl-6">
+              <div class="image-container">
+                {% if section.settings.collor_car_img != blank %}
+                	<img class="img-fluid" src="{{ section.settings.collor_car_img | img_url:"master"}}" alt="alternative">
+            	 {% else %}
+                   <img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/pro-5.png?v=1629832074" alt="alternative">
+            	{% endif %}  
+            </div> <!-- end of image-container -->
+          </div> <!-- end of col -->
+          <div class="col-lg-5 col-xl-5">
+              <div class="text-container">
+                  <div class="section-title">
+                  </div>
+                  <h2>{{ section.settings.collor_car_head}}</h2>
+                  <div class="orng-line care-orng-line"><img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/abt-2.png?v=1629182673" alt="alternative"></div>
+                  {{ section.settings.collor_car_rich}}
+              </div> <!-- end of text-container -->
+          </div> <!-- end of col -->
+      </div> <!-- end of row -->
+  </div> <!-- end of container -->
+</div>
+{%- endif -%}	
+{% schema %}
+  {
+    "name": "Collor Care",
+    "settings": [
+	{	
+		"type": "checkbox",
+        "id": "showproductcare",
+        "label": "Enable Section",
+        "default": true
+	 },
+	  {
+        "type":"image_picker",
+		"id":"collor_car_img",
+		"label":"Add Image Here"
+	  },
+     {
+        "type":"text",
+		"id":"collor_car_head",
+		"label":"Heading",
+		"default":"WHY WE CARE SO MUCH"
+	  },
+     {
+        "type":"richtext",
+		"id":"collor_car_rich",
+		"label":"Description",
+		"default":"<p>We know the pain of losing a pet and seeing them fade, which is why we work so hard to help them age happily and healthily. This motivated us to make an organic remedy that could be easily added to your pet’s favorite meals. We promise our holistic solution will help or you’re welcome to our money back guarantee. </p>"	
+    }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

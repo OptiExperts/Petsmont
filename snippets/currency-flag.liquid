@@ -1,0 +1,7 @@
+<a href="#" class="switcher-flag" data-value="{{ code }}">
+  <img class="switcher-flag__image lazyload fade-in"
+       onerror="this.parentElement.classList += ' switcher-flag--failed-load'"
+       data-src="{{ code | append: '.png' | asset_url }}"
+       alt="{{ code }}"/>
+  <span class="switcher-flag__image switcher-flag__image--alt">{{ code }}</span>
+</a>

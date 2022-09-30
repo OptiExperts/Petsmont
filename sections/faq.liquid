@@ -1,0 +1,58 @@
+<div class="faq-part">
+    <div class="container">
+      <div class="width_60">
+        <div class="product_heading">
+            <h2 class="h2-heading">{{ section.settings.faq_text | upcase}}</h2>
+            <img class="img-fluid orange_line-3" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/abt-2.png?v=1629182673" alt="alternative">
+          </div>
+        {% for block in section.blocks %}
+        	
+              <button class="accordion {% if forloop.first %}active{% endif %}	">{{ block.settings.ques_txt-1}}</button>
+              <div class="panel" {% if forloop.first %}style="display:block" {% endif %}	>
+                {{ block.settings.ans_des-1}}
+               </div>
+        
+        
+        {% endfor %}
+
+      </div>
+    </div>
+</div>
+{% schema %}
+  {
+    "name": "FAQ",
+    "settings": [
+        {
+			"type": "text",
+			"id" :"faq_text",
+			"label":" Text",
+			"default":"FAQS"
+		}
+	 ],
+ "blocks":[
+		{
+			"type":"faq",
+			"name":"FAQs",
+			"settings":[
+			   {
+                "type": "text",
+			    "id" :"ques_txt-1",
+			    "label":"Question"
+			   },
+               {
+                "type": "richtext",
+			    "id" :"ans_des-1",
+			    "label":"Answer"
+			   }
+			]
+
+		}
+	 ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

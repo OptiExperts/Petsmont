@@ -1,0 +1,194 @@
+<script>
+
+
+  let cdns = [
+    "{{ 'option_selection.js' | asset_url }}",
+    "{{ 'theme.js' | asset_url }}",
+    "{{ 'recently-viewed.js' | asset_url }}"
+  ];
+
+  if(screen.width > 500){
+
+    document.querySelector('body').dataset.load = true;
+
+    loadImages();
+
+  }
+  else{
+
+
+
+
+    loader = false;
+
+    document.addEventListener('click', function(){
+
+
+
+
+      if(!loader)
+      {
+
+
+
+
+        if(event.target.closest('.mobile_nav'))
+        {
+          event.target.closest('.mobile_nav').querySelector('div').classList.add('open')
+          document.querySelector('[data-dropdown="mobile_menu"]').style.display ="block";
+        }
+
+        // console.log("click");
+
+        loader = true;
+        loadImages();
+        loadScripts();
+        //document.querySelector('body').dataset.load = true;
+
+      }
+
+
+    })
+    document.addEventListener('tap', function(){
+      if(!loader)
+      {
+        console.log("tap");
+
+        loader = true;
+        loadImages();
+        loadScripts();
+        //document.querySelector('body').dataset.load = true;
+
+      }
+    })
+    document.addEventListener('touchstart', function(){
+      if(!loader)
+      {
+
+
+        if(event.target.closest('.mobile_nav'))
+        {
+          event.target.closest('.mobile_nav').querySelector('div').classList.add('open')
+          document.querySelector('[data-dropdown="mobile_menu"]').style.display ="block";
+        }
+        console.log("touch");
+        loader = true;
+        loadImages();
+        loadScripts();
+        //document.querySelector('body').dataset.load = true;
+
+      }
+    })
+    document.addEventListener('scroll', function(){
+      if(!loader)
+      {
+
+        console.log("scroll");
+        loader = true;
+        loadImages();
+        loadScripts();
+        // document.querySelector('body').dataset.load = true;
+
+      }
+    })
+
+  }
+
+  run = false;
+  function loadScripts(){
+    if(!run && screen.width < 500){
+      run = true;
+      cdns.forEach((source)=>{
+        var script = document.createElement('script');
+        var prior = document.getElementsByTagName('script')[0];
+        script.async = 1;
+        script.onload = script.onreadystatechange = function( _, isAbort ) {
+          if(isAbort || !script.readyState || /loaded|complete/.test(script.readyState) ) {
+            script.onload = script.onreadystatechange = null;
+            script = undefined;
+            //if(!isAbort && callback) setTimeout(callback, 0);
+          }
+        };
+        script.src = source;
+        prior.parentNode.insertBefore(script, prior);
+        console.log(`Scripts Loaded done ----  ${source} `);
+      });
+
+      if(location.pathname == "/")
+      {
+
+
+        document.querySelectorAll('[shougn-scripts]').forEach((sc)=>{
+
+
+          if(sc.dataset.src){
+
+
+            source = sc.dataset.src
+
+            var script = document.createElement('script');
+            var prior = document.getElementsByTagName('script')[0];
+            script.async = 1;
+
+            script.onload = script.onreadystatechange = function( _, isAbort ) {
+              if(isAbort || !script.readyState || /loaded|complete/.test(script.readyState) ) {
+                script.onload = script.onreadystatechange = null;
+                script = undefined;
+
+                //if(!isAbort && callback) setTimeout(callback, 0);
+              }
+            };
+
+            script.src = source;
+            prior.parentNode.insertBefore(script, prior);
+            console.log("script loaded" + source);
+          }
+
+        })
+
+      }
+
+      var evt = document.createEvent('Event');  
+      evt.initEvent('DOMReady', false, false);  
+      window.dispatchEvent(evt);
+      
+      
+    }
+  }
+
+  function loadImages(){
+    let  images  = document.querySelectorAll('.opt_lazy_custom');
+    if(images)
+    {
+
+
+      images.forEach((image)=>{
+
+        if(image.dataset.src)
+        {
+
+          image.src = image.dataset.src;
+
+        }
+
+
+
+      })
+
+    }
+
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+

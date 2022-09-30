@@ -1,0 +1,42 @@
+  <div class="product-poilices">
+  	 <div class="row">
+         {% for block in section.blocks %}
+            <div class="col-md-3">
+              <img src="{{block.settings.polices-img }}" class="img-fluid">
+             </div>
+               {% endfor %}
+              <div class="polices-description">
+                  <p>{{ block.settings.polices-description }}</p>
+              </div>
+       </div>
+  </div>
+{% schema %}
+{
+    "name": "Policy",
+    "blocks": [{
+        "name" : "Our Policy",
+        "type": "Hero",
+        "settings": [
+        {
+            "type": "text",
+            "id": "polices-description",
+            "label": "Policy Description"
+        },
+        {
+            "type": "image_picker",
+            "id": "polices-img",
+            "label": "Policy Image"
+        }
+        ]       
+    }
+    ]
+}
+{% endschema %}
+
+
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,390 @@
+#shopify-section-new-header .navbar-nav .nav-item {
+  margin-left: 15px
+}
+
+#shopify-section-new-header .navbar-nav .nav-item .nav-link {
+  letter-spacing: 0px
+}
+
+#navbarExample span.cart__count {
+  height: 20px;
+  width: auto;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 20px;
+  text-align: center;
+  padding-left: 6px;
+  padding-right: 5px;
+  min-width: 20px;
+  border-radius: 10px;
+  right: unset;
+  left: 35px;
+  top: -13px
+}
+
+#navbarExample #dCartBtn {
+  position: relative
+}
+
+#navbarExample .d_cart_icon_wrap {
+  display: none
+}
+
+#services.cards-1 .card-body p {
+  max-width: 120px;
+  margin-left: auto;
+  padding: 0;
+  margin-right: auto
+}
+
+#shopify-section-product_testimonials .testimonila_center .container {
+  padding-left: 40px;
+  padding-right: 40px
+}
+
+#navbarExample .social_icons {
+  display: none
+}
+
+#shopify-section-product_testimonials .testimonila_center .slick-center {
+  margin: 0;
+  padding: 0;
+  transform: scale(1.1)
+}
+
+#shopify-section-list-collections-template #details .brown-line,
+#shopify-section-list-collections-template #details .h2-heading {
+  text-align: center
+}
+
+.d_video_box .d_mediabox img {
+  max-width: 100%;
+  width: 400px
+}
+
+.testimonila_center .slick-active:first-child .container {
+  padding-right: 50px
+}
+
+.testimonila_center .nxt-icon1,
+.testimonila_center .prev-icon1 {
+  height: 18px;
+  transform: translateY(-50%)
+}
+
+.testimonila_center .prev-icon1 {
+  left: calc(100% / 3)
+}
+
+#shopify-section-product_testimonials .testimonila_center .nxt-icon1 {
+  right: calc(100% / 3)
+}
+
+#header .d_italic_text {
+  position: relative;
+  width: fit-content
+}
+
+#header .d_italic_text .arrow_img {
+  position: absolute;
+  z-index: 1;
+  left: calc(100% + 25px);
+  top: 58px;
+  transform: rotate(26deg);
+  max-width: 425px
+}
+
+#shopify-section-believe_section .btn-solid-reg {
+  display: block!important
+}
+
+.d_bestselller_slider .slick-slide {
+  margin-left: 0;
+  margin-right: 0;
+  opacity: .6
+}
+
+.d_bestselller_slider .slick-active {
+  opacity: 1
+}
+
+.d_bestselller_slider .nxt-icon1 {
+  position: absolute;
+  top: 50%;
+  right: -50px;
+  transform: translate(-50%)
+}
+
+.d_bestselller_slider .prev-icon1 {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  left: -35px;
+  transform: translate(-50%)
+}
+
+#shopify-section-product-care #details .text-container h2 {
+  font-weight: 600
+}
+
+#shopify-section-product-care #details .text-container p {
+  letter-spacing: .5px;
+  font-size: 14px;
+  line-height: 30px
+}
+
+#shopify-section-product-youtube .light-brownbox {
+  width: 100%;
+  letter-spacing: .5px;
+  line-height: 28px
+}
+
+#shopify-section-product-youtube .light-brownbox h2 {
+  letter-spacing: 4px;
+  line-height: initial
+}
+
+#shopify-section-product-natural #pills-tab {
+  border-bottom: 2px solid #cccccc6b;
+  width: 100%;
+  margin: auto
+}
+
+#shopify-section-product-natural #pills-tab .nav-item {
+  width: 50%
+}
+
+#shopify-section-product-natural #pills-tab .nav-item:last-of-type {
+  margin-right: 0
+}
+
+#shopify-section-product-natural #pills-tab .nav-item button {
+  background: 0 0;
+  padding-left: 0;
+  padding-right: 0;
+  transition: 0s;
+  border-radius: 0;
+  margin-bottom: -2px;
+  width: 100%;
+  text-align: center
+}
+
+#shopify-section-product-natural #pills-tab .nav-item button.active {
+  border-bottom: 2px solid #ffc617;
+  width: 100%
+}
+
+#shopify-section-article-template {
+  padding-top: 80px
+}
+
+#shopify-section-article-template .feature-page-title h1 {
+  width: 1000px;
+  max-width: 100%;
+  margin: 50px auto 10px auto;
+}
+
+@media(max-width:991px) {
+  #shopify-section-blog-template .blog-container h1, #shopify-section-article-template .feature-page-title h1 {
+    width: 1000px;
+    max-width: 100%;
+    margin: 30px auto 10px auto;
+    font-size: 2rem;
+    line-height: 2.5rem;
+  }
+}
+
+@media (min-width:601px) and (max-width:800px) {
+  #shopify-section-article-template .feature-page-title h1 {
+    margin-top: 7rem
+  }
+}
+
+@media(min-width:992px) {
+  .d_cart_btn {
+    display: none
+  }
+}
+
+@media(min-width:801px) and (max-width:991px) {
+  #shopify-section-product-believe .image-container {
+    margin-top: 30px
+  }
+}
+
+.d_cart_btn {
+  padding: 0;
+  border: none
+}
+
+.d_cart_btn img {
+  width: 25px
+}
+
+#navbarExample .navbar-brand {
+  margin-right: 0
+}
+
+@media(max-width:1400px) {
+  #header .d_italic_text .arrow_img {
+    top: -20px;
+    transform: rotate(-360deg);
+    max-width: 310px;
+    margin-left: -20px
+  }
+}
+
+@media(max-width:1300px) {
+  #header .d_italic_text .arrow_img {
+    top: -15px;
+    transform: rotate(0);
+    max-width: 339px
+  }
+}
+
+@media(max-width:1154px) {
+  #header .d_italic_text .arrow_img {
+    left: calc(75% + 25px)
+  }
+}
+
+@media(max-width:991px) {
+  #navbarExample .d_cart_icon_wrap {
+    display: block
+  }
+  #header .d_italic_text .arrow_img {
+    display: none
+  }
+  #shopify-section-product_testimonials .testimonila_center .container {
+    padding-left: 20px;
+    padding-right: 20px
+  }
+  #shopify-section-contact-us-template #details .orng-line {
+    text-align: center
+  }
+  #shopify-section-product_testimonials .testimonila_center .nxt-icon1 {
+    right: calc(calc(100% / 3) - 10px)
+  }
+  #shopify-section-product_testimonials .testimonila_center .prev-icon1 {
+    left: calc(calc(100% / 3) - 10px)
+  }
+  .d_cart_icon_wrap {
+    position: relative;
+    margin-right: 10px
+  }
+  .d_cart_icon_wrap .cart__count {
+    margin: 0;
+    right: -9px;
+    top: -9px;
+    bottom: unset;
+    left: unset;
+    position: absolute;
+    text-indent: unset;
+    font-size: 13px;
+    font-weight: 600;
+    width: auto;
+    padding: 0 6px;
+    min-width: 19px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    border-radius: 10px;
+    height: 19px
+  }
+  .d_cart_icon_wrap .mobile-icon {
+    padding-right: 0
+  }
+  #navbarExample .social_icons {
+    padding-top: 20px;
+    display: block
+  }
+  #navbarExample .social_icons ul {
+    display: flex;
+    list-style: none;
+    padding-left: 0
+  }
+  #navbarExample .social_icons ul li {
+    padding-right: 22px
+  }
+  #navbarExample .social_icons ul li a {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    border: 1px solid #5e3322;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px
+  }
+  #navbarExample .social_icons ul li a i {
+    color: #5e3322
+  }
+}
+
+@media(max-width:767px) {
+  #shopify-section-product_testimonials .testimonila_center .nxt-icon1 {
+    right: 0
+  }
+  #shopify-section-product_testimonials .testimonila_center .prev-icon1 {
+    left: 0
+  }
+  #shopify-section-product-youtube .light-brownbox {
+    letter-spacing: .5px
+  }
+  #shopify-section-product-youtube .light-brownbox h2 {
+    letter-spacing: 4px;
+    font-weight: 600;
+    font-size: 22px
+  }
+  #shopify-section-product-recommendations .like-product {
+    max-width: 300px;
+    margin: 0 auto
+  }
+  .d_bestselller_slider .prev-icon1 {
+    left: 60px
+  }
+  .d_bestselller_slider .nxt-icon1 {
+    right: 53px
+  }
+  #shopify-section-product-template .ddesktopdiv {
+    display: none
+  }
+  #shopify-section-product-template .quadd-wrapper .dmobilediv {
+    display: block
+  }
+  #shopify-section-product-template .quadd-wrapper {
+    display: flex;
+    flex-direction: column
+  }
+  #shopify-section-product-template .quadd-wrapper>div:first-of-type {
+    margin-top: -15px;
+    order: 2
+  }
+  #shopify-section-product-template .quadd-wrapper .dmobilediv {
+    order: 1
+  }
+  #shopify-section-product-template .quadd-wrapper .product-add {
+    order: 3;
+    margin-top: -15px
+  }
+}
+
+@media(max-width:576px) {
+  .d_bestselller_slider .slick-slide .slide_inner {
+    padding: 0 15px
+  }
+  .d_bestselller_slider .prev-icon1 {
+    left: 45px
+  }
+  .d_bestselller_slider .nxt-icon1 {
+    right: 30px
+  }
+}
+
+@media (max-width:800px) {
+  #services.cards-1 .card-body p {
+    max-width: none;
+    margin-left: auto;
+    padding: 0;
+    margin-right: auto
+  }
+}

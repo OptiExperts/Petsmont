@@ -1,0 +1,126 @@
+<div class="container test-container">
+
+<div data-fera-container="403702"></div>
+  </div>
+
+{% comment %}
+<div class="test-container">
+<div class="container">
+      <div class="product_heading">
+        <h2 class="h2-heading testing-head">{{ section.settings.testi_txt | upcase}}</h2>
+          		<img class="img-fluid orange_line-1" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/abt-2.png?v=1629182673" alt="alternative">
+      </div>
+      <div class="testimonila_center">
+        {% for block in section.blocks %}
+        	<div>
+              	<div class="{% unless block.settings.skip_container %}container homepage-spaced-row{% endunless %}" data-section-type="video">       	
+        	
+
+
+                {% if block.settings.video_url != blank %}
+                  <div class="video-container" data-video-id="{{ block.settings.video_url.id }}" data-video-url="{{ block.settings.video_url }}" data-video-type="{{ block.settings.video_url.type }}" data-video-autoplay="{% if block.settings.cover_image == blank %}{{ block.settings.autoplay }}{% else %}false{% endif %}">
+                    {% if block.settings.cover_image != blank %}
+                      <div class="video-container__cover">
+                        <div class="rimage-outer-wrapper lazyload fade-in"
+                            data-bgset="{% include 'bgset', image: block.settings.cover_image %}"
+                            data-sizes="auto"
+                            data-parent-fit="cover">
+                          <noscript>
+                            <div class="rimage-wrapper" style="padding-top:{{ 1 | divided_by: block.settings.cover_image.aspect_ratio | times: 100 }}%">
+                              <img src="{{ block.settings.cover_image | img_url: '1024x1024' }}" alt="{{ block.settings.cover_image.alt | escape }}" class="rimage__image">
+                            </div>
+                          </noscript>
+                        </div>
+
+                        {%- unless block.settings.tint_color contains ',0' -%}
+                          <div class="image-tint" style="background-color: {{ block.settings.tint_color }};opacity: {{ block.settings.tint_opacity | divided_by: 100.00 }};"></div>
+                        {%- endunless -%}
+
+                        <div class="video-container__overlay">
+                          <a href="#" class="video-container__play" aria-label="{{ 'general.accessibility_labels.video_play' | t | escape }}">{% include 'svg-play' %}</a>
+                          {% if block.settings.title != blank %}
+                            <a class="feature-link video-container__overlay-text reading-width align-center" href="#">{{ block.settings.title }}</a>
+                          {% endif %}
+                        </div>
+                      </div>
+                    {% endif %}
+                  </div>
+                {% endif %}
+              </div>
+              
+       		</div>         
+        {% endfor %}
+      </div>
+</div>
+</div>
+{% endcomment %}
+  {% schema %}
+  {
+    "name": "Product Testimonials",
+    "settings": [
+	   {
+        "type":"text",
+		"id":"testi_txt",
+		"label":"Heading",
+		"default":"TESTIMONIAL"
+	   }
+	 ],
+  "blocks":[
+		{
+			"type":"tesimonial",
+			"name":"Tesimonial",
+			"settings":[
+			  {
+        "id": "video_url",
+        "type": "video_url",
+        "label": "Link",
+        "accept": ["youtube", "vimeo"],
+        "info": "Supports Youtube and Vimeo",
+        "default": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc"
+      },
+      {
+        "id": "autoplay",
+        "type": "checkbox",
+        "label": "Autoplay",
+        "info": "Video will be muted",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "skip_container",
+        "label": "Full page width",
+        "default": false
+      },
+      {
+        "id": "cover_image",
+        "type": "image_picker",
+        "label": "Cover image"
+      },
+      {
+        "type": "color",
+        "id": "tint_color",
+        "label": "Tint",
+        "default": "#000000"
+      },
+      {
+        "type": "range",
+        "id": "tint_opacity",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "%",
+        "label": "Tint strength",
+        "default": 25
+      }
+			]
+
+		}
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

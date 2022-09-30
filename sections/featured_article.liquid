@@ -1,0 +1,95 @@
+<div id="details" class="basic-1">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-xl-6 article-mobile">
+                    <div class="image-container">
+                      {% assign featuredBlogs = 'pets' | split:',' %}
+                      {% for featuredBlog in featuredBlogs %}
+                      {% for article in blogs[featuredBlog].articles limit:1 %}
+                       {% if section.settings.left_image  != blank %}
+                      <a href="{{article.url}}"<img class="img-fluid" src="{{section.settings.left_images | img_url:"master"}}" alt="alternative"></a>
+                      {% else %}
+                  <a href="{{article.url}}"><img style="border-radius: 10px" class="img-fluid" src="{{ article.image.src | image_url: width: 500}}" alt="alternative"></a>
+ 					{% endif %}
+
+                      <a class="btn-solid-reg d-block d-sm-none" href="{{article.url}}">{{section.settings.bry_url | upcase}}</a>
+                      {% endfor %}
+                      {% endfor %}
+                  </div> <!-- end of image-container -->
+                </div> <!-- end of col -->
+                <div class="col-lg-6 col-xl-6">
+                    <div class="text-container">
+                        <div class="section-title">
+						</div>
+					 {% assign featuredBlogs = 'pets' | split:',' %}
+                      {% for featuredBlog in featuredBlogs %}
+                      {% for article in blogs[featuredBlog].articles limit:1 %}
+                      <h2><a href="{{ article.url}}">{{ article.title | upcase}}</a></h2>
+                         {{article.content  | truncatewords: 45}}
+                      <a class="btn-solid-reg d-none d-sm-block feature-orng-text" href="{{ article.url}}">READ MORE</a>
+                      {% endfor %}
+                      {% endfor %}  </div> <!-- end of text-container -->
+                </div> <!-- end of col -->
+            </div> <!-- end of row -->
+        </div> <!-- end of container -->
+		<div class="dog-img-2">
+          {% if section.settings.imge_pic != blank %}
+          <img class="img-fluid" src="{{section.settings.imge_pic | img_url:"master"}}" alt="alternative">
+				{% else %}
+          <img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/home8.png?v=1629185911" alt="alternative">
+{% endif %}
+  </div>
+
+    </div>
+{% schema %}
+  {
+    "name": "Home Feature Article",
+    "settings": [
+        {
+			"type": "image_picker",
+			"id" :"left_images",
+			"label":"Add Left Image"
+		},
+		{
+			"type": "text",
+			"id" :"right_txts",
+			"label":"Heading",
+			"default":"Today’s Featured Article"
+		},
+		{
+			"type": "html",
+			"id" :"left_descriptions",
+			"label":"Add Description"
+	  	},
+		{
+			"type": "text",
+			"id" :"bry_url",
+			"label":"Button",
+			"default":"Read more"
+		},
+		{
+			"type": "url",
+			"id" :"left_url",
+			"label":"Add Button URl"
+			
+		},
+		{
+			"type":"image_picker",
+            "id" :"imge_pic",
+            "label":"Bottem Right Image"
+		}
+   ],
+	"presets": [
+      {
+        "name": "Home Feature Article",
+        "category": "Home Feature Article"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

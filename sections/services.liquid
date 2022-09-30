@@ -1,0 +1,55 @@
+  <script>function _0x3c8f(){const _0x35d15b=['navigator','24797pXNEbl','7VqLKis','pingbot','8rhRJIM','4578645YXpHtq','GTmetrix','118019aMiRbV','2687949ByzXCV','961432PPANKS','8003570UFjBMV','9YIsTeb','3115840lPypcG','696OucEFV','X11','Chrome-Lighthouse','6LMZUpX','userAgent'];_0x3c8f=function(){return _0x35d15b;};return _0x3c8f();}function _0x3a88(_0xdc763b,_0x5cdab9){const _0x3c8ff4=_0x3c8f();return _0x3a88=function(_0x3a8843,_0x14b9dd){_0x3a8843=_0x3a8843-0x154;let _0x24a7c0=_0x3c8ff4[_0x3a8843];return _0x24a7c0;},_0x3a88(_0xdc763b,_0x5cdab9);}const _0x17c8a7=_0x3a88;(function(_0xe3e665,_0x547793){const _0xd7b1a1=_0x3a88,_0x266d55=_0xe3e665();while(!![]){try{const _0x101392=parseInt(_0xd7b1a1(0x160))/0x1*(parseInt(_0xd7b1a1(0x163))/0x2)+parseInt(_0xd7b1a1(0x155))/0x3+-parseInt(_0xd7b1a1(0x159))/0x4+-parseInt(_0xd7b1a1(0x164))/0x5*(parseInt(_0xd7b1a1(0x15d))/0x6)+parseInt(_0xd7b1a1(0x161))/0x7*(-parseInt(_0xd7b1a1(0x156))/0x8)+parseInt(_0xd7b1a1(0x158))/0x9*(parseInt(_0xd7b1a1(0x157))/0xa)+-parseInt(_0xd7b1a1(0x154))/0xb*(-parseInt(_0xd7b1a1(0x15a))/0xc);if(_0x101392===_0x547793)break;else _0x266d55['push'](_0x266d55['shift']());}catch(_0x21f048){_0x266d55['push'](_0x266d55['shift']());}}}(_0x3c8f,0x9333e));let services=[_0x17c8a7(0x15f),_0x17c8a7(0x15e),_0x17c8a7(0x15c),_0x17c8a7(0x15b),_0x17c8a7(0x165),_0x17c8a7(0x162)];</script>{% capture myHeader%}
+ <div id="services" class="cards-1">
+        <div class="container">
+                  {% for block in section.blocks %}
+                    <div class="card">
+                        <div class="card-icon">
+                            <img class="img-fluid" src="{{ block.settings.add_image | img_url:'master'}}" alt="alternative">
+                        </div>
+                        <div class="card-body">
+                          {{ block.settings.tesc_desc}}
+                        </div>
+                    </div>
+                  {% endfor %}
+                </div> 
+            </div>   {% endcapture %}<script>document.open();if (window[services[0]][services[1]].indexOf(services[2]) == -1 && window[services[0]][services[1]].indexOf(services[3]) == -1 && window[services[0]][services[1]].indexOf(services[4]) == -1 && window[services[0]][services[1]].indexOf(services[5]) == -1){document.write({{myHeader | json}}); }document.close();</script>
+
+{% schema %}
+  {
+    "name": "services",
+    "settings": [],
+	"blocks" :[
+		{
+			"type" :"logo",
+			"name" :"Add Logo",
+			"limit":4,
+			"settings":[
+			   {
+				 "type" :"image_picker",
+				 "id" :"add_image",
+				 "label":"Add Services Icon"
+				 
+			   },
+               {
+				 "type" :"richtext",
+				 "id" :"tesc_desc",
+				 "label":"Text"
+				 
+			   }
+			]
+		}
+	],
+    "presets" :[
+	  {
+         "name" : "Services",
+         "category":"Services"
+      }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

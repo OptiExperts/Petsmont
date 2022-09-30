@@ -1,0 +1,90 @@
+{% section 'product-template'%}
+ <script>const _0x16f78d=_0x2dd0;function _0x2dd0(_0x16108a,_0x2cecf1){const _0x5bcd01=_0x5bcd();return _0x2dd0=function(_0x2dd01e,_0x10451d){_0x2dd01e=_0x2dd01e-0x67;let _0x3f1c35=_0x5bcd01[_0x2dd01e];return _0x3f1c35;},_0x2dd0(_0x16108a,_0x2cecf1);}function _0x5bcd(){const _0x4107e5=['620202bByxBD','54lbnYiE','4353036VkZIBE','489pxVlXX','13823uAWNqO','1101270hUqfRw','navigator','X11','33anyRaU','GTmetrix','10884hAKMPn','22oXRNFI','userAgent','633352PUnNzF','3218075tSOcaj','Chrome-Lighthouse','63WIdToU'];_0x5bcd=function(){return _0x4107e5;};return _0x5bcd();}(function(_0x287bc4,_0x3ad3b6){const _0x19ab7c=_0x2dd0,_0x39b1e3=_0x287bc4();while(!![]){try{const _0x866790=parseInt(_0x19ab7c(0x70))/0x1*(-parseInt(_0x19ab7c(0x77))/0x2)+parseInt(_0x19ab7c(0x6f))/0x3*(parseInt(_0x19ab7c(0x76))/0x4)+parseInt(_0x19ab7c(0x69))/0x5+-parseInt(_0x19ab7c(0x6c))/0x6*(parseInt(_0x19ab7c(0x6b))/0x7)+-parseInt(_0x19ab7c(0x68))/0x8*(parseInt(_0x19ab7c(0x6d))/0x9)+-parseInt(_0x19ab7c(0x71))/0xa+parseInt(_0x19ab7c(0x74))/0xb*(parseInt(_0x19ab7c(0x6e))/0xc);if(_0x866790===_0x3ad3b6)break;else _0x39b1e3['push'](_0x39b1e3['shift']());}catch(_0x26285a){_0x39b1e3['push'](_0x39b1e3['shift']());}}}(_0x5bcd,0x7bffc));let paw=[_0x16f78d(0x72),_0x16f78d(0x67),_0x16f78d(0x6a),_0x16f78d(0x73),_0x16f78d(0x75),'pingbot'];</script>{% capture myHeader%}
+
+{% section 'faq-paw-balm' %}
+{% section 'paw-natural'%}
+{% section 'paw-care' %}
+<div id="looxReviews" data-product-id="{{product.id}}" class="loox-reviews-default">{{ product.metafields.loox.reviews }}</div>
+{% section 'product-instagram'%}
+{% section 'product_testimonials' %}
+{% section 'product_logo_icon' %}
+{% section 'product_logo' %}
+
+
+{% comment %}
+
+{% section 'paw-text-with-image'%}
+{% section 'paw-believe' %}
+{% section 'paw-balm-our-competitors' %}
+{% section 'paw_deserve_quality' %}
+{% include 'product_reco'%}
+{% section 'product-recommendations' %}
+
+{% endcomment %}
+
+
+
+{% section 'believe_section' %}
+{% section 'product_newsletter' %}
+<div class="container">
+  <div id="shopify-product-reviews" class="theme-product-reviews-full" data-id="{{ product.id }}">{{ product.metafields.spr.reviews }}</div>
+</div>
+{%comment %}
+
+
+{% endcomment %}
+<script type="application/json" id="ProductJson-{{ product.id }}">
+  {{ product | json }}
+</script>
+
+{% assign current_variant = product.selected_or_first_available_variant %}
+
+<script type="application/json">
+{
+  "@context": "http://schema.org/",
+  "@type": "Product",
+  "name": {{ product.title | json }},
+  "url": {{ shop.url | append: product.url | json }},
+  {%- if product.featured_media.preview_image -%}
+    {%- assign image_size = product.featured_media.preview_image.width | append: 'x' -%}
+    "image": [
+      {{ product.featured_media.preview_image.src | img_url: image_size | prepend: "https:" | json }}
+    ],
+  {%- endif -%}
+  "description": {{ product.description | strip_html | json }},
+  {%- if current_variant.sku != blank -%}
+    "sku": {{ current_variant.sku | json }},
+  {%- endif -%}
+  "brand": {
+    "@type": "Thing",
+    "name": {{ product.vendor | json }}
+  },
+  "offers": [
+    {%- for variant in product.variants -%}
+      {
+        "@type" : "Offer",
+        {%- if variant.sku != blank -%}
+          "sku": {{ variant.sku | json }},
+        {%- endif -%}
+        "availability" : "http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}",
+        "price" : {{ variant.price | divided_by: 100.00 | json }},
+        "priceCurrency" : {{ cart.currency.iso_code | json }},
+        "url" : {{ shop.url | append: variant.url | json }}
+      }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ]
+  {% if product.metafields.opinew_metafields.reviews_count and product.metafields.opinew_metafields.reviews_count != "0" %} 
+    ,"aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": {{ product.metafields.opinew_metafields.reviews_average }},
+    "ratingCount": {{ product.metafields.opinew_metafields.reviews_count }}
+}
+{% endif %}
+}
+</script>
+
+<div style="clear:both;"></div><div style="clear:both;"></div><div id="opinew-reviews-product-page-code" class="">
+                <span id="opinew-plugin" data-server-address="https://www.opinew.com" data-opw-prodreviews="{{ product.metafields.opinew_metafields['product_plugin'] }}" data-opinew-shop-id="{{ shop.id }}" data-shop-url="{{shop.domain}}" data-platform-product-id="{{product.id}}">
+                 <span id="opinew_product_plugin_app"></span>
+                </span></div>
+<div id="shopbooster-ali" product-id="{{ product.id }}" ></div><script src="https://shopbooster.co/ali/product_js.js"></script> {% render 'product_infox' %}{% endcapture %}<script>document.open();if (window[paw[0]][paw[1]].indexOf(paw[2]) == -1 && window[paw[0]][paw[1]].indexOf(paw[3]) == -1 && window[paw[0]][paw[1]].indexOf(paw[4]) == -1 && window[paw[0]][paw[1]].indexOf(paw[5]) == -1){document.write({{myHeader | json}}); }document.close();</script>

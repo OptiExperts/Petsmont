@@ -1,0 +1,122 @@
+<div class="marg1701"></div>
+
+<div id="details" class="basic-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-xl-6">
+                    <div class="text-container">
+                        <h2>{{section.settings.contact_title | upcase}}</h2>
+						<div class="orng-line-contact"><img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/abt-2_c55fa978-24d8-4bff-aa0d-f5ced81a1d5e.png?v=1629185928" alt="alternative"></div>
+					{% if section.settings.contact_descr != blank %}
+                      {{ section.settings.contact_descr }}
+                      {% else %}
+                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                      {% endif %}    
+                      <ul class="list-unstyled li-space-lg p-small contact-details">
+                        <li><img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/New_Project_5.png?v=1630929515" alt="alternative"> <span class="social-text"><a href="mailto:{{section.settings.contact_email}}"><b>Email us:</b>  {{section.settings.contact_email}}</a></span></li>
+                        <li><img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/New_Project_4.png?v=1630929469" alt="alternative"> <span class="social-text"><a href="tel:{{section.settings.contact_phone}}"><b>Phone:</b>  {{section.settings.contact_phone}}</a></span></li>
+                              <li><img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/New_Project_1_6efce788-179b-4a95-b57c-bac092b95a1f.png?v=1630929446" alt="alternative"> <span class="social-text"><b>Send us a letter:</b>  {{section.settings.contact_add}}</span></li>
+
+                          </ul>
+                    </div> 
+                </div> 
+				  <div class="col-lg-6 col-xl-6">
+                    <div class="image-container">
+                      {% if section.settings.contact_image != blank %}
+						<img class="img-fluid" src="{{section.settings.contact_image | img_url:'master'}}" alt="alternative">
+                   		{% else%}
+                        <img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/contact-1.png?v=1629365712" alt="alternative">
+                    {% endif %}
+                    </div> <!-- end of image-container -->
+                </div>
+            </div> 
+        </div> 
+    </div>
+<div class="basic-2 bg-img8">
+  <div class="container">
+    {% form 'contact', class:"contact-forms" %}
+     {% if form.posted_successfully? %}
+              <p class="feedback">{{ 'contact.form.post_success' | t }}</p>
+            {% endif %}
+
+            {% if form.errors %}
+              <ul class="errors">
+                {% for field in form.errors %}
+                  <li>{{ field | replace: 'body','Message' | capitalize }} - {{ form.errors.messages[field] }}</li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+       <form>
+        <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group">
+                        <input type="text" class="form-control-input" placeholder="Name" required="" name="contact[name]" >
+                 </div>
+			  </div>
+              <div class="col-lg-6">
+              <div class="form-group">
+                      <input type="email" class="form-control-input" placeholder="Email" required="" name="contact[email]" >
+                  </div>
+              </div>
+              <div class="col-lg-12">
+                  <div class="form-group">
+                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" placeholder="Message" required="" name="contact[body]"></textarea>
+                  </div>
+                  <div class="form-group text-center">
+                      <button type="submit" class="form-control-submit-button btn-solid-lg">SUBMIT</button>
+                  </div>
+             </div>
+		</div>
+      </form>
+    {% endform %}
+	</div>
+</div>
+<div class="marg100"></div>
+
+{% schema %}
+  {
+    "name": "Contact Us",
+    "settings": [
+      {
+      	"type" :"text",
+		"id":"contact_title",
+		"label":"Title",
+		"default":"Contact us"
+	  },
+      {
+      	"type" :"richtext",
+		"id":"contact_descr",
+		"label":"Description"
+	  },
+     {
+      	"type" :"text",
+		"id":"contact_email",
+		"label":"Email",
+		"default":"info@petsmont.com"
+	  },
+      {
+      	"type" :"text",
+		"id":"contact_phone",
+		"label":"Phone",
+        "default":"000000"
+	  },
+     {
+      	"type" :"text",
+		"id":"contact_add",
+		"label":"Address",
+		"default":"757 SE 17th Street Suite 149 Fort Luderdale, FL 33316"
+	  },
+      {
+		"type" :"image_picker",
+		"id" :"contact_image",
+		"label":"Add Image"
+      }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

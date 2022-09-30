@@ -1,0 +1,74 @@
+<div id="details" class="basic-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-xl-6">
+                    <div class="text-container">
+                        <div class="section-title">
+					</div>
+                        <h2>{{ section.settings.heading-4}}</h2>
+						{% if section.settings.desc-4 != blank %}<h4><strong class="about-h4">{{section.settings.desc-4}}</strong></h4>{% endif %}
+				    {% if section.settings.rich_descrption_3 != blank %}
+                      {{ section.settings.rich_descrption_3 }}
+                      {% else %}
+                        <p>
+                        I was raised on a farm in France.<br>
+                        It’s pretty romantic if you think about it. I grew up surrounded by farm animals. We had horses, cows, rabbits, geese, chicks, cats, and dogs freely roaming around, and I played with them every chance I got. To me, they’re more than pets. They’re family.
+                        <br>
+                        Growing up with animals was the best part of my childhood. My pets taught me how to love and care for myself and others, giving me reasons to believe we’re all the same and part of the vaster circle of life. Living with them has also taught me the value of what we put inside our bodies to live longer and thrive.
+                        <br>
+                        I joined Petsmont because we share the same ideals about healthy living and giving our pets the best they deserve. I love that we outsource premium ingredients and materials only from the best farmers and organic producers we trust to create products that will benefit the gentlest souls on Earth – our four-legged friends.
+                        <br>
+                        I hope you will be part of our journey as we continue to craft our story and grow with us as one big and happy family.
+                        </p>
+                      {% endif %}
+                    </div> <!-- end of text-container -->
+                </div> <!-- end of col -->
+				
+				<div class="col-lg-6 col-xl-6">
+                    {% if section.settings.imges-22 != blank %}
+                   <img class="img-fluid fluid-img" src="{{section.settings.imges-22 | img_url:'master'}}" alt="alternative">
+                  {% else %}
+                    <img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/New_Project_5_99711c3a-1bd9-448b-8dab-9404d5dd7739.png?v=1631648391" alt="alternative">
+                  {% endif %}
+                </div> <!-- end of col -->
+            </div> <!-- end of row -->
+			
+        </div>
+    </div>
+<div class="marg100"></div>
+{% schema %}
+  {
+    "name": "About CEO-Meet",
+    "settings": [
+      { 
+			"type" :"text",
+			"id" :"heading-4",
+			"label":"Heading",
+			"default":"MEET THE CEO"
+	   },
+       {
+			"type" :"text",
+			"id" :"desc-4",
+			"label":"Sub-Heading",
+			"default":"Leo Roux"
+	   },
+      {
+			"type" :"html",
+			"id" :"rich_descrption_3",
+			"label":"Description"
+			
+	   },
+       {
+			"type" :"image_picker",
+			"id" :"imges-22",
+			"label":"Add Image "
+	   }
+   ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

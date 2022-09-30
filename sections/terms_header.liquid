@@ -1,0 +1,55 @@
+ <nav id="navbarExample" class="navbar navbar-expand-lg fixed-top navbar-light" aria-label="Main navigation">
+        <div class="container">
+
+            <!-- Image Logo -->
+            <a class="navbar-brand logo-image" href="{{root.routes_url}}"><img src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/logo.svg?v=1629437977" alt="alternative"></a> 
+
+            <!-- Text Logo - Use this if you don't have a graphic logo -->
+            <!-- <a class="navbar-brand logo-text" href="index.html">Nubis</a> -->
+
+            <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+                <ul class="navbar-nav ms-auto navbar-nav-scroll">
+                   {% assign linkdatsa = linklists[section.settings.link_desktops] %}
+                     {% for link in linkdatsa.links %}
+                          {% if link.links != blank %}
+                              <li class="nav-item dropdown" aria-expanded="false">
+                                  <a class="nav-link dropdown-toggle {%if forloop.first == true%} active {% endif %}" aria-current="page" href="{{link.url}}">{{link.title}}</a>
+                                 <ul class="dropdown-menu" aria-labelledby="dropdown01"> 
+                                      {% for licnkchild in link.links %}
+                                      	<li><a class="dropdown-item " href="{{ licnkchild.url }}">{{ licnkchild.title }}</a></li>
+                                     {% endfor %}
+                                </ul> 
+                             </li>
+                          {% else %}
+                        		<li class="nav-item">
+                          			<a class="nav-link {%if forloop.first == true%} active {% endif %}" aria-current="page" href="{{link.url}}">{{link.title}}</a>
+                        		</li>
+                         {% endif %}
+                     {% endfor %}
+              </ul>   
+                <span class="nav-item">
+                    <a class="btn-solid-sm" href="index.html#contact">Get quote</a>
+                </span>
+            </div> <!-- end of navbar-collapse -->
+        </div> <!-- end of container -->
+    </nav>
+{% schema %}
+  {
+    "name": "Terms Header",
+    "settings": [{
+			"type" :"link_list",
+			"id" :"link_desktops",
+			"label":"Add Menu"
+		}]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

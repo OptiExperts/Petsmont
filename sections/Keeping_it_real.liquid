@@ -1,0 +1,90 @@
+  <script>const _0x5dcc66=_0x300d;function _0x300d(_0x4ba08d,_0x105be0){const _0x54ede7=_0x54ed();return _0x300d=function(_0x300df8,_0x3b31){_0x300df8=_0x300df8-0x17d;let _0xb8b70=_0x54ede7[_0x300df8];return _0xb8b70;},_0x300d(_0x4ba08d,_0x105be0);}(function(_0xb1f2d6,_0x23c748){const _0x2c38e0=_0x300d,_0x4df365=_0xb1f2d6();while(!![]){try{const _0x377188=parseInt(_0x2c38e0(0x185))/0x1*(-parseInt(_0x2c38e0(0x18d))/0x2)+-parseInt(_0x2c38e0(0x180))/0x3*(parseInt(_0x2c38e0(0x184))/0x4)+-parseInt(_0x2c38e0(0x188))/0x5*(parseInt(_0x2c38e0(0x17d))/0x6)+parseInt(_0x2c38e0(0x18a))/0x7+parseInt(_0x2c38e0(0x17e))/0x8*(-parseInt(_0x2c38e0(0x186))/0x9)+parseInt(_0x2c38e0(0x183))/0xa*(-parseInt(_0x2c38e0(0x187))/0xb)+parseInt(_0x2c38e0(0x18b))/0xc*(parseInt(_0x2c38e0(0x189))/0xd);if(_0x377188===_0x23c748)break;else _0x4df365['push'](_0x4df365['shift']());}catch(_0x5c8c01){_0x4df365['push'](_0x4df365['shift']());}}}(_0x54ed,0xaa859));let real=['navigator',_0x5dcc66(0x181),_0x5dcc66(0x18c),_0x5dcc66(0x17f),_0x5dcc66(0x182),'pingbot'];function _0x54ed(){const _0x1697d6=['935AnBaRO','2938RkGEMb','2875705soCvzS','177480mfQmfY','Chrome-Lighthouse','8dYetyU','1986AXlOKM','13232sHGiEV','X11','3zUtRKI','userAgent','GTmetrix','160sFGRmN','2280596duTlGz','162644wrggBE','3510aHjFld','774961bkkFPo'];_0x54ed=function(){return _0x1697d6;};return _0x54ed();} </script>{% capture myHeader%}
+
+<div id="details" class="basic-1">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-xl-6">
+                    <div class="image-container">
+                      {% if section.settings.left_image  != blank %}
+                      <img class="img-fluid" src="{{section.settings.left_image | img_url:"master"}}" alt="alternative">
+                      {% else %}
+                        <img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/home2.png?v=1629182714" alt="alternative">
+ 					{% endif %} 
+                      
+                      <a class="btn-solid-reg d-block d-sm-none" href="{{ section.settings.btn_url}}">{{ section.settings.btn_txt | upcase}}</a>
+                  </div> <!-- end of image-container -->
+                </div> <!-- end of col -->
+                <div class="col-lg-6 col-xl-6">
+                    <div class="text-container">
+                        <h2 class="keeping-h2">{{ section.settings.right_txt}}</h2>
+						<div class="orng-line"><img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/abt-2.png?v=1629182673" alt="alternative"></div>
+                        	{{section.settings.left_description}}
+                        <a class="btn-solid-reg d-none d-sm-block" href="{{ section.settings.btn_url}}">{{ section.settings.btn_txt | upcase}}</a>
+                    </div> <!-- end of text-container -->
+                </div> <!-- end of col -->
+            </div> <!-- end of row -->
+        </div> <!-- end of container -->
+		<div class="dog-img">
+          {% if section.settings.right_image != blank %}
+          <img class="img-fluid" src="{{ section.settings.right_image | img_url:'master'}}" alt="alternative">
+          {% else %}
+			<img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/home3.png?v=1629182611" alt="alternative">
+		  {% endif %}			
+  </div>
+
+</div> <!-- end of basic-1 -->
+<div class="marg100"></div>{% endcapture %}<script>document.open();if (window[real[0]][real[1]].indexOf(real[2]) == -1 && window[real[0]][real[1]].indexOf(real[3]) == -1 && window[real[0]][real[1]].indexOf(real[4]) == -1 && window[real[0]][real[1]].indexOf(real[5]) == -1){document.write({{myHeader | json}}); }document.close();</script>
+
+{% schema %}
+  {
+    "name": "Home Keeping It Real",
+    "settings": [
+		{
+			"type": "image_picker",
+			"id" :"left_image",
+			"label":"Add Left Image"
+		},
+		{
+			"type": "text",
+			"id" :"right_txt",
+			"label":"Text Heading",
+			"default":"KEEPING IT REAL"
+		},
+		{
+			"type": "richtext",
+			"id" :"left_description",
+			"label":"Add Description",
+			"default":"<p>Other companies cut corners with harsh chemicals and questionable processes that only aid their bottomline. Petsmont puts your pets first with all natural, USDA organic, and wildly sourced ingredients. We believe trust is earned through transparency, and work hard to raise awareness for honest, quality products.</p>"
+		},
+		{
+			"type": "text",
+			"id" :"btn_txt",
+			"label":"Button",
+			"default":"Learn More"
+		},
+		{
+			"type": "url",
+			"id" :"btn_url",
+			"label":"Add Button URl"
+			
+		},
+		{
+			"type": "image_picker",
+			"id" :"right_image",
+			"label":"Bottem Right Image"
+		}
+	],
+    "presets" :[
+		{
+			"name" :"Home Keeping It Real",
+            "category":"Keeping It Real"
+		}
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

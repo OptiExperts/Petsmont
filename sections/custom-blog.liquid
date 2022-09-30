@@ -1,0 +1,100 @@
+
+<div class="marg100"></div>
+    <!-- Details 1 -->
+    <div id="details" class="basic-1">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-xl-6">
+                    <div class="image-container">
+                        <img class="img-fluid" src="images/blog-images/blog-01.png" alt="alternative">
+                    </div> <!-- end of image-container -->
+                </div> <!-- end of col -->
+                <div class="col-lg-6 col-xl-6">
+                    <div class="text-container">
+                        
+                        <h2>THE BENEFITS OF OUR PAW BALM</h2>
+
+						<div class="orng-line"><img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/abt-2.png?v=1629182673" alt="alternative"></div>
+						
+						
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+						</p>
+
+<p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde...</p>
+ <p>omnis iste natus error sit voluptatem accusantium doloremque </p>
+                      <a class="btn-solid-lg" href="#" style="width:100%">READ MORE</a>
+                    </div> <!-- end of text-container -->
+                </div> <!-- end of col -->
+            </div> <!-- end of row -->
+        </div> <!-- end of container -->
+		
+
+    </div> <!-- end of basic-1 -->
+    <!-- end of details 1 -->
+	{% paginate blog.articles by 6 %}
+<div class="bg-img9">
+<div class="container">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      {% assign blog-collection = linklists[section.settings.blog_collection] %}
+      {% for link in blog-collection.links %}
+          <li class="nav-item" role="presentation">
+            <a href="{{link.url}}" class="nav-link {% if  forloop.first == true %}active {% endif %}" id="all-tab" data-bs-toggle="tab" data-bs-target="#all" type="button" role="tab" aria-controls="all" aria-selected="true">{{ link.title | upcase}}</a>
+          </li>
+      {% endfor %}
+  
+</ul>
+  
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
+  <div class="blog-tab">
+    <div class='row'>
+      {% assign blog_handle = "pets" | split: "," %}
+            {% for cat in blog_handle %}
+               {% for article in blogs[cat].articles limit:6%}
+       				<div class="col-md-4 col-6">
+                        <div class="card">
+                              <div class="img blog_hehight">
+                      <img class="img-fluid" src="{{ article.image.src | img_url: 'master' }}" alt="alternative"></div>
+                      <div class="content">
+                                <div class="title">
+                      {{ article.title }}</div>
+                      <span><i class="far fa-calendar"></i>  {{ article.created_at | date: "%b %d, %y" }}</span>
+                        <p>{{ article.content | truncatewords: 30}}</p>
+               			<a href="{{article.url}}" class="btn-solid-reg d-none d-sm-block">READ MORE</a>
+                                </div>
+                      </div>
+						</div>
+     			 {% endfor %}
+            {% endfor %}
+                     </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+{% if paginate.pages > 1 %}
+          <div class="pagination">
+            {% comment %}
+            When paginating blog articles, a previous article is actually a newer article, not an older one,
+            because blog articles are shown and paginated in a reversed chronological order.
+            The word 'previous' can be confusing, hence we'll change it.
+            {% endcomment %}
+            {%- assign older_articles = 'blogs.pagination.older_articles' | t -%}
+            {%- assign newer_articles = 'blogs.pagination.newer_articles' | t -%}
+            {% include 'pagination', previous_text: newer_articles, next_text: older_articles %}
+          </div>
+        {% endif %}
+      {% endpaginate %}
+<div class="marg100"></div>
+{% schema %}
+  {
+    "name": "Custom Blog page",
+    "settings": [
+      {
+		"type" :"link_list",
+		"id":"blog_collection",
+		"label":"Blogs Collection"
+	  }
+    ]
+  }
+{% endschema %}

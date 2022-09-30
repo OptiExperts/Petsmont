@@ -1,0 +1,149 @@
+<div class="bg-img12">
+	<!-- Testimonials -->
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 col-xl-6">
+                    <div class="text-container light-brownbox">
+                        <h2>{{ section.settings.text_heading | upcase}}</h2>
+						<div class="light-brown-line"><img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/New_Project_18.png?v=1629831222" alt="alternative"></div>
+                      {{ section.settings.text_subheading}}  
+                    </div> <!-- end of text-container -->
+                </div> <!-- end of col -->
+                <div class="col-lg-6 col-xl-6">
+                   <div class="{% unless section.settings.skip_container %}container homepage-spaced-row{% endunless %}" data-section-type="video">
+  {% if section.settings.title != blank and section.settings.dcover_image == blank %}
+    <div class="section-title-container align-center {% if section.settings.skip_container %}container{% endif %}">
+      <h2>{{ section.settings.title }}</h2>
+    </div>
+  {% endif %}
+
+  {% if section.settings.video_url != blank %}
+                     
+   <div class="d_video_box"> 
+    	<a href="{{ section.settings.video_url }}" class="d_mediabox"><img class="cover_desktop_image" src="{{ section.settings.dcover_image | img_url: '1024x1024' }}"></a>
+        
+        <!--<a href="{{ section.settings.video_url }}" class="d_mediabox"><img src="{{ 'you_tube_cover.png' | asset_url }}"></a>-->
+     
+    </div>                 
+    <div style="display:none" class="video-container" data-video-id="{{ section.settings.video_url.id }}" data-video-url="{{ section.settings.video_url }}" data-video-type="{{ section.settings.video_url.type }}" data-video-autoplay="{% if section.settings.cover_image == blank %}{{ section.settings.autoplay }}{% else %}false{% endif %}">
+      {% if section.settings.dcover_image != blank %}
+        <div class="video-container__cover">
+          <div class="rimage-outer-wrapper lazyload fade-in"
+              data-bgset="{% include 'bgset', image: section.settings.dcover_image %}"
+              data-sizes="auto"
+              data-parent-fit="cover">
+            <noscript>
+              <div class="rimage-wrapper" style="padding-top:{{ 1 | divided_by: section.settings.dcover_image.aspect_ratio | times: 100 }}%">
+                <img src="{{ section.settings.dcover_image | img_url: '1024x1024' }}" alt="{{ section.settings.dcover_image.alt | escape }}" class="rimage__image">
+              </div>
+            </noscript>
+          </div>
+
+          {%- unless block.settings.tint_color contains ',0' -%}
+            <div class="image-tint" style="background-color: {{ section.settings.tint_color }};opacity: {{ section.settings.tint_opacity | divided_by: 100.00 }};"></div>
+          {%- endunless -%}
+
+          <div class="video-container__overlay">
+            <a href="#" class="video-container__play" aria-label="{{ 'general.accessibility_labels.video_play' | t | escape }}">{% include 'svg-play' %}</a>
+            {% if section.settings.title != blank %}
+              <a class="feature-link video-container__overlay-text reading-width align-center" href="#">{{ section.settings.title }}</a>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+</div>
+ <!-- end of image-container -->
+                </div> <!-- end of col -->
+            </div> <!-- end of row -->
+        </div>
+	
+	</div>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/mediabox@1.1.3/dist/mediabox.js"> </script>
+
+<script>
+  MediaBox('.d_mediabox');
+</script>  
+{% schema %}
+  {
+    "name": "Text With Youtube",
+    "settings": [
+		{
+			"type":"text",
+            "id":"text_heading",
+            "label":"Heading",
+			"default":"YOUR BABIES DESERVE QUALITY"
+		},
+		{
+			"type":"html",
+            "id":"text_subheading",
+            "label":"Description",
+			"default":"<p>There is no excuse for the standard practices in the pet industry. Organic used to just be “normal.” We must normalize better quality and care for our little loved ones. This isn’t about trends or buzz words – it’s about health and happiness.</p>"
+		},
+		{
+        "id": "title",
+        "type": "text",
+        "label": "Heading"
+      },
+      {
+        "id": "video_url",
+        "type": "video_url",
+        "label": "Link",
+        "accept": ["youtube", "vimeo"],
+        "info": "Supports Youtube and Vimeo",
+        "default": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc"
+      },
+      {
+        "id": "autoplay",
+        "type": "checkbox",
+        "label": "Autoplay",
+        "info": "Video will be muted",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "skip_container",
+        "label": "Full page width",
+        "default": false
+      },
+      {
+        "id": "dcover_image",
+        "type": "image_picker",
+        "label": "Desktop Cover image"
+      },
+     {
+        "id": "mcover_image",
+        "type": "image_picker",
+        "label": "Mobile Cover image"
+      },
+      {
+        "type": "color",
+        "id": "tint_color",
+        "label": "Tint",
+        "default": "#000000"
+      },
+      {
+        "type": "range",
+        "id": "tint_opacity",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "%",
+        "label": "Tint strength",
+        "default": 25
+      }
+		
+	]
+    
+
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

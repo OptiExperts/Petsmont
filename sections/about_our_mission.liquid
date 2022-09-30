@@ -1,0 +1,63 @@
+<div class="marg100"></div> 
+<div id="details" class="basic-1">
+   <div class="container">
+       <div class="row">
+            <div class="col-lg-6 col-xl-6">
+                <div class="image-container">
+                  {% if section.settings.imge != blank %}
+                   <img class="img-fluid" src="{{section.settings.imge | img_url:'master'}}" alt="alternative">
+                  {% else %}
+                    <img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/abt-1.png?v=1629359999" alt="alternative">
+                  {% endif %}
+                </div>
+			</div>
+            <div class="col-lg-5 col-xl-5">
+                <div class="text-container our_mission container_txt">
+                       {% if section.settings.heading !=blank %} <h2>{{ section.settings.heading}}</h2>{% endif %}
+						<div class="orng-line-5"><img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/abt-2_c55fa978-24d8-4bff-aa0d-f5ced81a1d5e.png?v=1629185928" alt="alternative"></div>
+						
+						<h4><strong class="about-h4">{{ section.settings.heading2}}</strong></h4>
+                        {{section.settings.desc_txtx}}
+              </div> 
+            </div>
+          <div class="col-lg-1 col-xl-1">
+         </div>
+       </div>
+   </div>
+</div>
+{% schema %}
+  {
+    "name": "About Our Mission",
+    "settings": [
+		{
+			"type" :"image_picker",
+			"id" :"imge",
+			"label":"Add Image Here"
+		},
+		{
+			"type" :"text",
+			"id" :"heading",
+			"label":"Heading",
+			"default":"OUR MISSION AT PETSMONT"
+		},
+        {
+			"type" :"text",
+			"id" :"heading2",
+			"label":"Sub-Heading",
+			"default":"Keeping your pets Active and Healthy"
+		},
+        {
+			"type" :"richtext",
+			"id" :"desc_txtx",
+			"label":"Descritption",
+			"default":"<p>It’s hard to explain how your heart skips a beat every time your pet runs to you for a cuddle. But here at Petsmont, we get it. We understand the bond that exists between you and your four-legged friend. That’s the main reason we started our company. We are pet lovers, too, on a mission dedicated to providing your precious pet the healthy products they deserve made by farmers and organic producers we, along with our veterinarian friends, trust and advocate.</p>"
+		}
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

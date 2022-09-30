@@ -1,0 +1,119 @@
+<div class="footer bg-gray">
+        <img class="decoration-circles" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/decoration-circles.png?v=1629374173" alt="alternative">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>{% if sections.settings.richlist != blank %}{{sections.settings.richlist}} {% else %}If you want to find out which are the right influencers for your product marketing campaigns then follow us {% endif %}</h4>
+                    <div class="social-container">
+                        <span class="fa-stack">
+                          {% if settings.social_facebook_url != blank %}
+                            <a href="{{ settings.social_facebook_url }}" target="_blank">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-facebook-f fa-stack-1x"></i>
+                            </a>
+                          {% endif %}
+                        </span>
+                        <span class="fa-stack">
+                          {% if settings.social_twitter_url != blank %}
+                            <a href="{{ settings.social_twitter_url }}" target="_blank">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-twitter fa-stack-1x"></i>
+                            </a>
+                          {% endif %}
+                        </span>
+                        <span class="fa-stack">
+                            {% if settings.social_pinterest_url != blank %}
+                            <a href="{{settings.social_pinterest_url}}" target="_blank">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-pinterest-p fa-stack-1x"></i>
+                            </a>
+                          {% endif %}
+                        </span>
+                        <span class="fa-stack">
+                           {% if settings.social_instagram_url != blank %}
+                            <a href="{{settings.social_instagram_url}}" target="_blank">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-instagram fa-stack-1x"></i>
+                            </a>
+                          {% endif %}
+                        </span>
+                        <span class="fa-stack">
+                          {% if settings.social_youtube_url != blank %}
+                            <a href="{{ settings.social_youtube_url }}" target="_blank">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-youtube fa-stack-1x"></i>
+                            </a>
+                          {% endif %}
+                        </span>
+                    </div> <!-- end of social-container -->
+                </div> <!-- end of col -->
+            </div> <!-- end of row -->
+        </div> <!-- end of container -->
+    </div>
+    <div class="copyright bg-gray">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-12 col-sm-12">
+                    <ul class="list-unstyled li-space-lg p-small">
+                      {% assign linklst = linklists[section.settings.add_list ] %}
+                      {% if linklst.links != blank %}
+                        	{% for link in linklst.links %}
+                        		<li><a href="{{link.url}}">{{link.title}}</a></li>
+                       		{% endfor %}
+                      {% else %}
+                      	<li><a href="article.html">Article Details</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                      {% endif %}
+                     
+                    </ul>
+                </div> <!-- end of col -->
+                <div class="col-lg-3 col-md-12 col-sm-12">
+                    <p class="p-small statement">Copyright © <a href="#">{{shop.name}}</a></p>
+                </div> <!-- end of col -->
+
+                <div class="col-lg-3 col-md-12 col-sm-12">
+                    <p class="p-small statement">Distributed by <a href="{{section.settings.changurl}}" target="_blank">{{section.settings.newtxt}}</a></p>
+                </div> <!-- end of col -->
+            </div> <!-- enf of row -->
+        </div> <!-- end of container -->
+    </div> 
+<button onclick="topFunction()" id="myBtn">
+        <img src="images/up-arrow.png" alt="alternative">
+    </button>
+{% schema %}
+  {
+    "name": "Footer",
+    "settings": [
+		{
+			"type":"link_list",
+            "id":"add_list",
+            "label":"Add Menu"
+		},
+		{
+			"type":"text",
+            "id":"richlist",
+            "label":"Description"
+		},
+		{
+			"type":"text",
+            "id":"newtxt",
+            "label":"Company Name",
+			"default":"Themewagon"
+		},
+		{
+			"type":"url",
+            "id":"changurl",
+            "label":"Change Url"
+			
+			
+		}
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

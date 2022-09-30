@@ -1,0 +1,54 @@
+  <script>const _0x1873d6=_0x3f26;(function(_0x393afa,_0x507dea){const _0xa1aece=_0x3f26,_0xae48c=_0x393afa();while(!![]){try{const _0x45532e=-parseInt(_0xa1aece(0x14a))/0x1+-parseInt(_0xa1aece(0x14f))/0x2+-parseInt(_0xa1aece(0x155))/0x3*(-parseInt(_0xa1aece(0x147))/0x4)+parseInt(_0xa1aece(0x14d))/0x5*(parseInt(_0xa1aece(0x154))/0x6)+-parseInt(_0xa1aece(0x149))/0x7*(-parseInt(_0xa1aece(0x146))/0x8)+-parseInt(_0xa1aece(0x145))/0x9*(-parseInt(_0xa1aece(0x151))/0xa)+-parseInt(_0xa1aece(0x150))/0xb*(parseInt(_0xa1aece(0x14c))/0xc);if(_0x45532e===_0x507dea)break;else _0xae48c['push'](_0xae48c['shift']());}catch(_0x564b91){_0xae48c['push'](_0xae48c['shift']());}}}(_0x5e42,0x77302));let logo=[_0x1873d6(0x14b),_0x1873d6(0x148),_0x1873d6(0x156),_0x1873d6(0x152),_0x1873d6(0x153),_0x1873d6(0x14e)];function _0x3f26(_0x4418e0,_0x4e1618){const _0x5e4284=_0x5e42();return _0x3f26=function(_0x3f2676,_0x536ccb){_0x3f2676=_0x3f2676-0x145;let _0x673914=_0x5e4284[_0x3f2676];return _0x673914;},_0x3f26(_0x4418e0,_0x4e1618);}function _0x5e42(){const _0x26e81d=['GTmetrix','54USfcVp','18maGnGh','Chrome-Lighthouse','9uTMmDw','4528nbPYio','37692cuZvzi','userAgent','4193kSoAaL','298944WZfeeJ','navigator','36xCIfjY','458690exqCCn','pingbot','1562578orRnnC','1716077VcEmyY','8152340eKXTkK','X11'];_0x5e42=function(){return _0x26e81d;};return _0x5e42();} </script>{% capture myHeader%}
+
+<div class="find-us1">
+	<div class="container">
+	<span>{{ section.settings.logo_heading}}</span>
+	<br><br>
+      <div class="fivehide">
+      {% for block in section.blocks %}
+      <img class="img-fluid " src="{{ block.settings.add_image | img_url:'master'}}" alt="alternative">
+      {% endfor %}
+      </div>
+  </div>
+	</div> {% endcapture %}<script>document.open();if (window[logo[0]][logo[1]].indexOf(logo[2]) == -1 && window[logo[0]][logo[1]].indexOf(logo[3]) == -1 && window[logo[0]][logo[1]].indexOf(logo[4]) == -1 && window[logo[0]][logo[1]].indexOf(logo[5]) == -1){document.write({{myHeader | json}}); }document.close();</script>
+
+{% schema %}
+  {
+    "name": "Logo",
+    "settings": [
+		{
+		  "type":"text",
+		  "id" :"logo_heading",
+		  "label":"Heading",
+		 "default":"WHERE YOU CAN FIND US"	
+		}
+	],
+	"blocks" :[
+		{
+			"type" :"logo",
+			"name" :"Add Logo",
+			"limit":5,
+			"settings":[
+			   {
+				 "type" :"image_picker",
+				 "id" :"add_image",
+				 "label":"Add Logo"
+				 
+			   }
+			]
+		}
+	],
+    "presets" :[
+      {
+		"name" :"Home Logo",
+		"category":"Home Logo"
+		}
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

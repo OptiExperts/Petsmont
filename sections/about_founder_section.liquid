@@ -1,0 +1,132 @@
+<div id="details" class="bg-img6">
+        <div class="container">
+          <div class="basic-1">
+            <div class="row">
+                <div class="col-lg-6 col-xl-6">
+                    <div class="image-container d-none d-sm-block">
+                  {% if section.settings.imges != blank %}
+                   <img class="img-fluid " src="{{section.settings.imges | img_url:'master'}}" alt="alternative">
+                  {% else %}
+                    <img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/abt-4.png?v=1629361914" alt="alternative">
+                  {% endif %}
+                </div>
+                  
+                    <div class="image-container d-block d-sm-none">
+                  {% if section.settings.imges2 != blank %}
+                   <img class="img-fluid" src="{{section.settings.imges2 | img_url:'master'}}" alt="alternative">
+                  {% else %}
+                    <img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/abt-8.png?v=1629362005" alt="alternative">
+                  {% endif %}
+                </div>
+                </div> <!-- end of col -->
+                <div class="col-lg-5 col-xl-5">
+                    <div class="text-container container_txt">
+                        <div class="section-title">
+						</div>
+                        <h2>{{ section.settings.heading-1}}</h2>
+						{% if section.settings.heading-3 != blank %}<h4><strong class="about-h4">{{section.settings.heading-3}}</strong></h4>{% endif %}
+					{% if section.settings.rich_descrption != blank %}
+                      {{ section.settings.rich_descrption }}
+                      {% else %}
+                      <p>If I were to write a movie about my childhood, Ginger, my first dog, would be the main character. She inspired my love for animals and had gifted me with the fondest memories I'll never forget.<br>
+							Since then, I’ve cared for many pets at home.
+							<br>
+						Ginger 2 and Ginger 3 were my next babies, named after my first dog. Then came another dog I named Trusky. Then I decided to expand my pets from Eggroll the Hamster, Spike the Turtle, Baby the Squirrel, Jenna the Rabbit, Jorgito the Cockatiel, to Orange the Ring-Necked Snake, and lots and lots of fish.
+							<br>
+								As I grew up, my love for animals only grew stronger.</p>
+                       {% endif %}
+                    </div> <!-- end of text-container -->
+                </div> <!-- end of col -->
+            </div></div>
+          
+          
+          <div class="basic-2">
+			<div class="row">
+               
+                <div class="col-lg-6 col-xl-6">
+                    <div class="text-container container_txt">
+                      {% if section.settings.rich_descrption_2 != blank %}
+                      {{ section.settings.rich_descrption_2 }}
+                      {% else %}
+                       <p>
+                              When I married my wife Katia, she encouraged me to lead a healthy life and continue my love for pets. Like her, I became obsessed with nutrition and longevity. Over time, we thought, since we're all into superfoods for humans, why don't we give our pets the same healthy choice?
+                              <br>
+                              Twenty-five years of studying and researching superfoods have inspired us to create a company dedicated to pets, ensuring they'll get premium quality and nutritious food using only natural and unprocessed ingredients.
+                              <br>
+                              Hence, the birth of Petsmont.
+                              <br>
+                              At Petsmont, our goal is to raise awareness about nutrition and good health and embrace non-toxic and organic elements in our everyday living.
+                              <br>
+                              We also hope to provide premium products outsourced from the best organic farmers in the market that pet owners can trust so they can give the best care for their furry babies who deserve to live longer, healthier, and happier.</p>
+                  {% endif %}   
+                  </div> <!-- end of text-container -->
+                </div> <!-- end of col -->
+				
+				 <div class="col-lg-5 col-xl-5">
+                  <div class="image-container d-none d-sm-block">
+                  {% if section.settings.imges2 != blank %}
+                   <img class="img-fluid" src="{{section.settings.imges2 | img_url:'master'}}" alt="alternative">
+                  {% else %}
+                    <img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/abt-8.png?v=1629362005" alt="alternative">
+                  {% endif %}
+                </div>
+                      <div class="image-container d-block d-sm-none">
+                  {% if section.settings.imges != blank %}
+                   <img class="img-fluid " src="{{section.settings.imges | img_url:'master'}}" alt="alternative">
+                  {% else %}
+                    <img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/abt-4.png?v=1629361914" alt="alternative">
+                  {% endif %}
+                </div>
+                </div> <!-- end of col -->
+            </div>
+          </div>
+        </div> <!-- end of container -->
+		
+    </div>
+
+{% schema %}
+  {
+    "name": "About Founder",
+    "settings": [
+       {
+			"type" :"image_picker",
+			"id" :"imges",
+			"label":"Add Image Here"
+	   },
+	   {
+			"type" :"text",
+			"id" :"heading-1",
+			"label":"Heading",
+			"default":"MEET THE FOUNDER"
+	   },
+       {
+			"type" :"text",
+			"id" :"heading-3",
+			"label":"Sub-Heading",
+			"default":"Stephen Munive"
+	   },
+       {
+			"type" :"html",
+			"id" :"rich_descrption",
+			"label":"Description"
+			
+	   },
+       {
+			"type" :"html",
+			"id" :"rich_descrption_2",
+			"label":"Description"
+	  },
+     {
+			"type" :"image_picker",
+			"id" :"imges2",
+			"label":"Add Image Here"
+	   }
+   ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

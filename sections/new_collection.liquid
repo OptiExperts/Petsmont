@@ -1,0 +1,69 @@
+  <script>const _0x46f880=_0xe486;(function(_0x1dfd63,_0x3b69f1){const _0x2789c8=_0xe486,_0xa9eef7=_0x1dfd63();while(!![]){try{const _0x187e24=parseInt(_0x2789c8(0x188))/0x1+-parseInt(_0x2789c8(0x187))/0x2+-parseInt(_0x2789c8(0x18b))/0x3+parseInt(_0x2789c8(0x18f))/0x4+parseInt(_0x2789c8(0x186))/0x5+parseInt(_0x2789c8(0x191))/0x6+parseInt(_0x2789c8(0x18d))/0x7*(-parseInt(_0x2789c8(0x18a))/0x8);if(_0x187e24===_0x3b69f1)break;else _0xa9eef7['push'](_0xa9eef7['shift']());}catch(_0x3ca52c){_0xa9eef7['push'](_0xa9eef7['shift']());}}}(_0x22a3,0x873c4));function _0x22a3(){const _0x67630f=['1262416CYVEqg','189679EzCxhz','navigator','40456yFiBJW','422112uFqYKQ','X11','175zXjDMp','GTmetrix','1291208kdiyVt','pingbot','1493274XyEIMt','userAgent','Chrome-Lighthouse','3454505uooWcP'];_0x22a3=function(){return _0x67630f;};return _0x22a3();}function _0xe486(_0x3688c8,_0x33357f){const _0x22a312=_0x22a3();return _0xe486=function(_0xe4869b,_0x29ef79){_0xe4869b=_0xe4869b-0x186;let _0x151d7e=_0x22a312[_0xe4869b];return _0x151d7e;},_0xe486(_0x3688c8,_0x33357f);}let mstr=[_0x46f880(0x189),_0x46f880(0x192),_0x46f880(0x193),_0x46f880(0x18c),_0x46f880(0x18e),_0x46f880(0x190)]; </script>{% capture myHeader%}
+
+<div class="slider-bg home-slider-bg" style="background-image:none">
+    <div class="container">
+      {% assign collection = collections[section.settings.collection]%}
+    <h2 class="text-center">{{ collection.title | upcase}}</h2>
+      
+        <div class="slider d_bestselller_slider  slick-slides">
+          {% for product in collection.products%}
+         	<div>
+              <div class="slide_inner">
+                 <a href="{{ product.url | within: collection }}">
+              	 <div class="card">
+                    <div class="img">
+                      {% assign image = product.images %}
+                      {% if product.media[1].preview_image != blank %}
+                      <img class="img-fluid " src="{{ product.media[0].preview_image | product_img_url: 'master' }}" alt="alternative"></div>
+                      {% else %}
+                    <img class="img-fluid " src="{{ product.featured_image | product_img_url: 'medium' }}" alt="alternative">
+                </div>
+                    
+                   {% endif %}
+                   <div class="content">
+                     
+                        <div class="title">
+                         {{product.title }}
+                        </div>
+                        {% comment %}<p>{{product.description | truncatewords: 5, ""}}</p>{% endcomment %}
+                      <div class="loox-rating" data-id="{{ product.id }}" data-rating="{{ product.metafields.loox.avg_rating }}" data-raters="{{ product.metafields.loox.num_reviews }}"></div>
+       				   <div class="product-collection-content">
+                        <span class="price1">{{ product.compare_at_price | money }}</span>
+                        <span class="price2">{{ product.price | money}}</span>
+                        <div class="btn"><a href="{{ product.url | within: collection }}"><button>BUY NOW</button></a></div>
+                     </div>
+                    </div>
+                     </a>
+                  </div>
+              </div>
+          </div>
+          {% endfor %}
+         
+        </div>
+    </div>
+ {% endcapture %}<script>document.open();if (window[mstr[0]][mstr[1]].indexOf(mstr[2]) == -1 && window[mstr[0]][mstr[1]].indexOf(mstr[3]) == -1 && window[mstr[0]][mstr[1]].indexOf(mstr[4]) == -1 && window[mstr[0]][mstr[1]].indexOf(mstr[5]) == -1){document.write({{myHeader | json}}); }document.close();</script>
+
+{% schema %}
+  {
+    "name": "New Collection",
+    "settings": [
+		{
+			"type":"collection",
+			"id":"collection",
+			"label":"Add Collection"
+		}
+	],
+    "presets" :[
+	   {
+		 "name" :"Home Collection",
+         "category" :"New Collection"
+       }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

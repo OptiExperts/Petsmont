@@ -1,0 +1,57 @@
+<div class="basic-2">
+        <div class="container">
+            <div class="row">
+              <div class="col-lg-1 col-xl-1">
+         </div>
+                <div class="col-lg-5 col-xl-5">
+                    <div class="text-container">
+                        {% if section.settings.heading-1 != blank %}<h2>{{section.settings.heading-1}}</h2>{% endif %}
+                        {{ section.settings.desc_txtx-1}}
+                  </div> <!-- end of text-container -->
+                </div> <!-- end of col -->
+                <div class="col-lg-6 col-xl-6">
+                    <div class="image-container">
+                      {% if section.settings.imge-1 != blank %}
+                       <img class="img-fluid" src="{{ section.settings.imge-1 | img_url:'master'}}" alt="alternative">
+                      {% else%}
+                        <img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/abt-3.png?v=1629361267" alt="alternative">
+                      {% endif %}
+                    </div> <!-- end of image-container -->
+                </div> <!-- end of col -->
+            </div> <!-- end of row -->
+        </div> <!-- end of container -->
+		
+    </div>
+{% schema %}
+  {
+    "name": "About All Natural",
+    "settings": [
+		{
+			"type" :"text",
+			"id" :"heading-1",
+			"label":"Heading",
+			"default":"ALL-NATURAL, PREMIUM QUALITY, AND PROUDLY MADE IN THE USA"
+		},
+ 		{
+			"type" :"richtext",
+			"id" :"desc_txtx-1",
+			"label":"Descritption",
+			"default":"<p>At Petsmont, we believe in the power of good nutrition using non-toxic elements to boost brain health and immunity for pets. That’s why we have invested in extensive research, outsourced and partnered with the best farmers and expert organic and wild-caught producers in the market, and developed the most nutritious and health-oriented pet products using only natural, raw, and unprocessed ingredients. All Petsmont products are free from harsh chemicals, purely organic, and proudly made in the USA, so your furry baby stays active and lives longer in your happy home.<br>Health, vitality, longevity, and happiness for your pets. That’s the Petsmont promise.</p>"
+		},
+		{
+			"type" :"image_picker",
+			"id" :"imge-1",
+			"label":"Add Image Here"
+		}
+		
+       
+       
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,90 @@
+{%- if section.settings.showproductcare -%}
+<div class="faq-part">
+    <div class="container">
+      <div class="width_60">
+        <div class="product_heading">
+            <h2 class="h2-heading testing-head">{{ section.settings.salmon_faq_text | upcase}}</h2>
+            <img class="img-fluid orange_line-7" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/New_Project_9.png?v=1631037085" alt="alternative">
+          </div>
+        {% for block in section.blocks %}
+        	
+              <button class="accordion {% if forloop.first %}active{% endif %}	">{{ block.settings.salmon_ques_txt}}</button>
+              <div class="panel" {% if forloop.first %}style="display:block" {% endif %}	>
+                {{ block.settings.salmon_ans_des}}
+               </div>
+        
+        
+        {% endfor %}
+
+      </div>
+    </div>
+</div>
+{% if template contains 'product' %}
+<div class="cat-img-1">
+          <img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/cat.png?v=1642444177" alt="alternative">		
+  </div>
+{% endif %}
+{% endif %}
+{% schema %}
+  {
+    "name": "Salmon-FAQ",
+    "settings": [
+{	
+		"type": "checkbox",
+        "id": "showproductcare",
+        "label": "Enable Section",
+        "default": true
+	 },
+        {
+			"type": "text",
+			"id" :"salmon_faq_text",
+			"label":" Text",
+			"default":"FAQS"
+		}
+	 ],
+ "blocks":[
+		{
+			"type":"faq",
+			"name":"FAQs",
+			"settings":[
+			   {
+                "type": "text",
+			    "id" :"salmon_ques_txt",
+			    "label":"Question"
+			   },
+               {
+                "type": "richtext",
+			    "id" :"salmon_ans_des",
+			    "label":"Answer"
+			   }
+			]
+
+		}
+	 ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    debugger;
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.display === "block") {
+      panel.style.display = "none";
+    } else {
+      panel.style.display = "block";
+    }
+  });
+}
+
+  
+</script>

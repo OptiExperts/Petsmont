@@ -1,0 +1,82 @@
+<div class="bg-img1">
+	<div class="cards-2">
+		<div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 class="h2-heading">{{ section.settings.textimonial_heading | upcase}}</h2>
+                    <div class="brown-line"><img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/orng-line.png?v=1629382917" alt="alternative"></div>
+                </div>
+			</div> 
+            <div class="row">
+                <div class="col-lg-12 testimonila_slider">
+                      {% for block in section.blocks %}
+                      <div class="trans-div ">
+                          <div class="card orng-bg">
+                              <div class="quote-bg">
+                              	<img class="quotes" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/quotes.svg?v=1629184067" alt="alternative">
+                              </div>
+                              <div class="card-body inner-bg">
+                                  <img class="dog-img1" src="{{block.settings.testimonial_image | img_url:'master'}}" alt="alternative">
+                                  <div class="testimonial-author">{{block.settings.author_name}}</div>
+                                  <p class="testimonial-text">{{block.settings.author_descritption}}</p>
+                              </div>
+                          </div>
+                      </div>
+                      {% endfor %}
+                </div> 
+             </div> 
+		</div>
+	</div> 
+</div>
+{% schema %}
+  {
+    "name": "Home Testimonials",
+    "settings": [
+          {
+             "type" :"text",
+             "id" :"textimonial_heading",
+             "label":"Heading",
+			"default":"WHAT OUR CUSTOMER SAYS"
+
+           }
+		],
+	"blocks" :[
+		{
+			"type" :"Testimonials",
+			"name" :"Testimonials",
+			"settings":[
+			   {
+				 "type" :"image_picker",
+				 "id" :"testimonial_image",
+				 "label":"Add author Pic"
+				 
+			   },
+				{
+				 "type" :"text",
+				 "id" :"author_name",
+				 "label":"Add author Name"
+				 
+			   },
+				{
+				 "type" :"text",
+				 "id" :"author_descritption",
+				 "label":"Add author Descritption"
+				 
+			   }
+			]
+		}
+	],
+    "presets" :[
+	  {
+	     "name":"Home Testimonials",
+         "category":"Home Testimonials"
+	}
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

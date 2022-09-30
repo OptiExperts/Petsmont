@@ -1,0 +1,56 @@
+{%- if section.settings.showproductcare -%}
+<div class="marg100"></div>
+<div class="find-us">
+	<div class="container">
+	<span>{{ section.settings.main_head}}</span>
+	<br><br>
+      <div class="fivehide">
+      {% for block in section.blocks %}
+			<img class="img-fluid" src="{{ block.settings.logo_image | img_url:master}}" alt="alternative">
+      {% endfor %}
+      </div>
+
+	</div>
+	</div>
+{%- endif -%}
+{% schema %}
+  {
+    "name": "Product Find us",
+    "settings": [
+	{	
+		"type": "checkbox",
+        "id": "showproductcare",
+        "label": "Enable Section",
+        "default": true
+	 },
+		{
+			"type":"text",
+			"id":"main_head",
+			"label":"Heading",
+			"default":"AS SEEN ON"
+		}	
+	],
+    "blocks":[
+      {
+        "type" :"logo",
+        "name" :"Add Logo",
+        "limit":5,
+        "settings":[
+           {
+             "type" :"image_picker",
+             "id" :"logo_image",
+             "label":"Logo"
+
+           }
+        ]
+      }
+    ]
+ 
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

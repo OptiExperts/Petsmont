@@ -1,0 +1,512 @@
+{%- assign rk_resource_id = article.id | downcase -%}
+{%- assign rk_mf = article.metafields.recipekit[rk_resource_id] -%}
+{%- assign rk_settings = shop.metafields.recipekit.settings -%}
+{%- if rk_settings.widget_status == "enabled" and rk_mf != blank -%}
+  {{- 'recipekit.scss.css' | asset_url | stylesheet_tag -}}
+  {%- assign recipe_design = rk_settings.recipe_design -%}
+  {%- assign design_colour = rk_settings.design_colour -%}
+  {%- assign current_rating = rk_mf.recipe_rating | ceil | default: 5 -%}
+  {%- assign rating_count = rk_mf.rating_count | default: '0' -%}
+
+  {% comment %}
+    Liquid URL Transformations
+  {% endcomment %}
+  {% assign rk_last_url = rk_mf.recipe_image | split: 'https://res.cloudinary.com/hsxfx8igq/image/upload/' %}
+  {% assign rk_16_9_recipe_image =  rk_last_url[1] | prepend: 'https://res.cloudinary.com/hsxfx8igq/image/upload/t_16x9_recipe_image,f_auto/' %}
+  {% assign rk_1_1_recipe_image =  rk_last_url[1] | prepend: 'https://res.cloudinary.com/hsxfx8igq/image/upload/t_1x1_recipe_image,f_auto/' %}
+  {% assign rk_4_3_recipe_image =  rk_last_url[1] | prepend: 'https://res.cloudinary.com/hsxfx8igq/image/upload/t_4x3_recipe_image,f_auto/' %}
+  {% assign rk_video_split = rk_mf.recipe_video | split: 'https://www.youtube.com/watch?v=' %}
+  {% assign rk_video_id = rk_video_split[1] %}
+  {% assign rk_video_embed_url = 'https://www.youtube-nocookie.com/embed/' | append: rk_video_id %}
+  {% comment %}
+    End URL Transformations
+  {% endcomment %}
+
+  {%- comment -%}
+    Translations / Languages
+  {%- endcomment -%}
+  {%- assign rk_lang_directions = rk_settings.rk_lang_directions | default: 'Directions' -%}
+  {%- assign rk_lang_ingredients = rk_settings.rk_lang_ingredients | default: 'Ingredients' -%}
+  {%- assign rk_lang_category = rk_settings.rk_lang_category | default: 'Category' -%}
+  {%- assign rk_lang_serving = rk_settings.rk_lang_serving | default: 'Servings' -%}   
+  {%- assign rk_lang_prep_time = rk_settings.rk_lang_prep_time | default: 'Prep Time' -%}
+  {%- assign rk_lang_cook_time = rk_settings.rk_lang_cook_time | default: 'Cook Time' -%}
+  {%- assign rk_lang_author = rk_settings.rk_lang_author | default: 'Author: ' -%}
+  {%- assign rk_lang_rating_thanks = rk_settings.rk_lang_rating_thanks | default: 'Thanks for rating!' -%}
+  {%- assign rk_lang_rating_count = rk_settings.rk_lang_rating_count | replace: 'current_rating', current_rating | replace: 'rating_count', rating_count -%}
+  {%- assign rk_lang_note = rk_settings.rk_lang_note | default: 'Recipe Note' -%}
+  {%- assign rk_lang_video = rk_settings.rk_lang_video | default: 'Recipe Video' -%}
+  {%- assign rk_lang_minutes = rk_settings.rk_lang_minutes | default: 'minutes' -%}
+  {%- assign rk_lang_calories = rk_settings.rk_lang_calories | default: 'Calories' -%}
+  {%- comment -%}
+    End Translations / Languages
+  {%- endcomment -%}
+
+  {%- comment -%}
+    Google JSON-LD Schema for Recipes
+  {%- endcomment -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org/", 
+      "@type": "Recipe", 
+      "name": "{{- rk_mf.recipe_title -}}",
+      "image": [
+        "{{- rk_16_9_recipe_image -}}",
+        "{{- rk_4_3_recipe_image -}}",
+        "{{- rk_1_1_recipe_image -}}"
+      ],
+      "description": "{{- rk_mf.recipe_description -}}",
+      "keywords": "{{- rk_mf.recipe_category -}}",
+      "recipeYield": "{{- rk_mf.serving_size -}}",
+      "author": {
+        "@type": "Person",
+        "name": "{{- rk_mf.recipe_author -}}"
+      },
+      "cookTime": "{{- rk_mf.iso_cook_time -}}",
+      "prepTime": "{{- rk_mf.iso_prep_time -}}",
+      "totalTime": "{{- rk_mf.iso_total_time -}}",
+      "recipeCategory": "{{- rk_mf.recipe_category -}}",  
+      "recipeIngredient": [
+        {%- for ingredient in rk_mf.recipe_ingredients -%}
+          {%- unless ingredient.type == 'heading' %}
+            "{{- ingredient.ingredient -}}"{%- unless forloop.last -%},{%- endunless -%}
+          {%- endunless -%}
+        {%- endfor -%}
+      ],
+      "recipeInstructions": [
+        {%- for direction in rk_mf.recipe_directions -%}
+          {%- unless direction.type == 'heading' %}
+            {
+              "@type": "HowToStep",
+              "text": "{{- direction.direction -}}"
+            }{%- unless forloop.last -%},{%- endunless -%}
+          {%- endunless -%}
+        {%- endfor -%}
+      ],
+      "nutrition": {
+        "@type": "NutritionInformation",
+        "servingSize": "{{- rk_mf.serving_size -}}",
+        "calories": "{{- rk_mf.recipe_calories -}}"
+      },
+      "recipeCuisine": "{{- rk_mf.recipe_category -}}" 
+      {%- if rk_mf.enable_rating == true -%}
+      ,
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "{{- current_rating | default: '5' -}}",
+        "bestRating": "5",
+        "worstRating": "1",
+        "ratingCount": "{{ rating_count | default: '1' }}"
+      }
+      {%- endif -%}
+      {%- if rk_mf.recipe_video != blank %}
+      ,
+      "video": {
+        "@type": "VideoObject",
+        "name": "{{- rk_mf.recipe_title -}}",
+        "description": "{{- rk_mf.recipe_description -}}",
+        "thumbnailUrl": "{{- rk_16_9_recipe_image -}}",
+        "uploadDate": "{{- rk_mf.recipe_date -}}", 
+        "contentUrl": "{{- rk_mf.recipe_video -}}"
+      }  
+      {%- endif -%}
+    }
+  </script>
+  {%- comment -%}
+    End JSON-LD Schema
+  {%- endcomment -%}
+
+  {%- comment -%}
+	Facebook Sharing Schema
+  {%- endcomment -%}
+  <meta property="og:title" content="{{- rk_mf.recipe_title -}}">
+  <meta property="og:image" content="{{- rk_16_9_recipe_image -}}">
+  <meta property="og:description" content=" {{- rk_mf.recipe_description -}}">
+  {%- comment -%}
+	End Facebook Sharing Schema
+  {%- endcomment -%}
+
+  {% comment %}
+    Star SVG
+  {% endcomment %}
+  <svg style="display: none;">
+    <symbol id="star" viewBox="0 0 98 92">
+    <title>star</title>
+    <path stroke='#000' stroke-width='5' d='M49 73.5L22.55 87.406l5.05-29.453-21.398-20.86 29.573-4.296L49 6l13.225 26.797 29.573 4.297-21.4 20.86 5.052 29.452z' fill-rule='evenodd'/>
+  </svg>
+  {% comment %}
+    End Star SVG
+  {% endcomment %}
+
+  <div id="rk_parent">
+    {%- if recipe_design == 'rk_modern' -%}
+      <div class="rk_modern" style="display: none;">
+        <div class="rk_container">
+          <div class="rk_card">
+            <div class="rk_header">
+              <div class="rk_grid">
+                <div class="rk_column rk_primary">
+                  <h1 class="rk_heading">{{- rk_mf.recipe_title -}}</h1>
+                  {% if rk_mf.enable_rating == true %}
+                    <div class="rk_rating">
+                      <div class="stars">
+                        <a class="star {% if current_rating == 5 %} is-selected {% endif %}"><svg><use xlink:href="#star"></use></svg></a>
+                        <a class="star {% if current_rating == 4 %} is-selected {% endif %}"><svg><use xlink:href="#star"></use></svg></a>
+                        <a class="star {% if current_rating == 3 %} is-selected {% endif %}"><svg><use xlink:href="#star"></use></svg></a>
+                        <a class="star {% if current_rating == 2 %} is-selected {% endif %}"><svg><use xlink:href="#star"></use></svg></a>
+                        <a class="star {% if current_rating == 1 %} is-selected {% endif %}"><svg><use xlink:href="#star"></use></svg></a>
+                      </div>
+                      <p id="rk_rating_thanks">{{- rk_lang_rating_count -}}</p>
+                    </div>
+                  {% endif %}
+                </div>
+                <div class="rk_column rk_actions">
+                  <ul class="rk_social">
+                    <li>
+                      <span onclick="PrintElements.print(document.getElementsByClassName('rk_container'));" class="rk_print">
+                        <?xml version="1.0" encoding="iso-8859-1"?><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 360 360" style="enable-background:new 0 0 360 360;" xml:space="preserve"> <g id="XMLID_503_"> <rect id="XMLID_873_" x="60" y="15" width="240" height="60"/> <path id="XMLID_874_" d="M360,105H0v180h60v-90h240v90h60V105z M315,165c-8.284,0-15-6.716-15-15s6.716-15,15-15s15,6.716,15,15 S323.284,165,315,165z"/> <path id="XMLID_877_" d="M90,345h180V225H90V345z M120,255h120v30H120V255z"/> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> </svg>
+                      </span>
+                    </li>
+                    <li>
+                      <a target="_blank" href="//twitter.com/share?text={{- rk_mf.recipe_title | url_param_escape -}}&amp;url={{- shop.url -}}{{- article.url -}}">
+                        <?xml version="1.0" encoding="iso-8859-1"?><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 455 455" style="enable-background:new 0 0 455 455;" xml:space="preserve"> <path style="fill-rule:evenodd;clip-rule:evenodd;" d="M0,0v455h455V0H0z M352.751,163.259c0.123,2.773,0.186,5.561,0.186,8.36 c0,85.403-65.002,183.876-183.873,183.876c-36.496,0-70.466-10.697-99.065-29.037c5.056,0.601,10.199,0.907,15.417,0.907 c30.278,0,58.143-10.331,80.262-27.668c-28.28-0.519-52.148-19.204-60.373-44.88c3.948,0.757,7.997,1.163,12.161,1.163 c5.894,0,11.604-0.794,17.027-2.268c-29.563-5.939-51.841-32.057-51.841-63.368c0-0.273,0-0.544,0.006-0.814 c8.712,4.84,18.676,7.748,29.271,8.084c-17.342-11.589-28.748-31.371-28.748-53.79c0-11.845,3.187-22.945,8.751-32.492 c31.873,39.101,79.493,64.828,133.203,67.526c-1.103-4.732-1.677-9.665-1.677-14.729c0-35.688,28.938-64.623,64.626-64.623 c18.589,0,35.385,7.847,47.173,20.406c14.719-2.895,28.551-8.276,41.038-15.681c-4.824,15.092-15.071,27.754-28.415,35.754 c13.074-1.563,25.528-5.038,37.118-10.178C376.336,142.766,365.38,154.149,352.751,163.259z"/> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> </svg>
+                        <span class="visually-hidden">Share on Twitter</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a target="_blank" href="//www.facebook.com/sharer.php?u={{- shop.url -}}{{- article.url -}}">
+                        <?xml version="1.0" encoding="iso-8859-1"?><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 29.94 29.94" style="enable-background:new 0 0 29.94 29.94;" xml:space="preserve"> <g> <path d="M27.56,0.684H2.383C1.065,0.684,0,1.748,0,3.064v23.813c0,1.312,1.065,2.379,2.383,2.379H27.56 c1.312,0,2.38-1.066,2.38-2.379V3.064C29.939,1.748,28.871,0.684,27.56,0.684z M20.125,9.167c-0.619-0.362-1.11-0.648-1.727-0.648 c-0.604,0-1.12,0.151-1.384,0.405c-0.264,0.252-0.395,0.74-0.395,1.461v1.067h3.229l-0.699,2.968h-2.53v9.862h-4.056V14.42H10.67 v-2.968h1.895v-1.133c0-1.193,0.143-1.907,0.425-2.496c0.281-0.587,0.826-1.241,1.584-1.611c0.757-0.369,1.877-0.555,3.036-0.555 c1.188,0,2.116,0.396,3.254,0.715L20.125,9.167z"/> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> </svg>
+                        <span class="visually-hidden">Share on Facebook</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a target="_blank" href="//pinterest.com/pin/create/button/?url={{- shop.url -}}{{- article.url -}}&amp;media={{- rk_mf.recipe_image -}}&amp;description={{- rk_mf.recipe_title | url_param_escape-}}">
+                        <?xml version="1.0" encoding="iso-8859-1"?><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 455 455" style="enable-background:new 0 0 455 455;" xml:space="preserve"> <path style="fill-rule:evenodd;clip-rule:evenodd;" d="M0,0v455h455V0H0z M251.83,297.635c-19.57,0-37.973-10.516-44.227-22.557 c0,0-10.516,41.691-12.71,49.78c-7.84,28.437-30.926,56.874-32.684,59.176c-1.229,1.649-4.013,1.105-4.324-1.026 c-0.482-3.656-6.379-39.497,0.545-68.728c3.469-14.701,23.272-98.627,23.272-98.627s-5.771-11.543-5.771-28.624 c0-26.85,15.556-46.856,34.939-46.856c16.474,0,24.377,12.337,24.377,27.177c0,16.521-10.516,41.318-15.977,64.216 c-4.511,19.212,9.598,34.831,28.546,34.831c34.332,0,57.371-43.993,57.371-96.138c0-39.684-26.678-69.397-75.292-69.397 c-54.867,0-89.075,40.96-89.075,86.649c0,15.805,4.667,26.928,11.963,35.499c3.345,4.014,3.765,5.585,2.613,10.143 c-0.917,3.344-2.862,11.309-3.765,14.529c-1.151,4.559-4.931,6.191-9.053,4.496c-25.217-10.329-37.009-37.989-37.009-69.164 C105.569,131.619,148.832,70,234.874,70c69.101,0,114.557,50.013,114.557,103.667C349.431,244.635,309.995,297.635,251.83,297.635z" /> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> </svg>
+                        <span class="visually-hidden">Share on Pinterest</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="rk_grid rk_secondary">
+                <div class="rk_column rk_details">
+                  <div class="rk_grid">
+                    {%- if rk_mf.recipe_category != blank -%}
+                      <div class="rk_column">
+                        <h2 class="rk_meta">{{- rk_lang_category -}}</h2>
+                        <p>{{- rk_mf.recipe_category -}}</p>
+                      </div>
+                    {%- endif -%}
+                    {%- if rk_mf.serving_size != blank -%}
+                      <div class="rk_column">
+                        <h2 class="rk_meta">{{- rk_lang_serving -}}</h2>
+                        <p>{{- rk_mf.serving_size -}}</p>
+                      </div>
+                    {%- endif -%}
+                    {%- if rk_mf.prep_time != blank -%}
+                      <div class="rk_column">
+                        <h2 class="rk_meta">{{- rk_lang_prep_time -}}</h2>
+                        <p>{{ rk_mf.prep_time }} {{ rk_lang_minutes }}</p>
+                      </div>
+                    {%- endif -%}
+                    {%- if rk_mf.cook_time != blank -%}
+                      <div class="rk_column">
+                        <h2 class="rk_meta">{{- rk_lang_cook_time -}}</h2>
+                        <p>{{ rk_mf.cook_time }} {{ rk_lang_minutes }}</p>
+                      </div>
+                    {%- endif -%}
+                    {%- if rk_mf.recipe_calories != blank -%}
+                      <div class="rk_column">
+                        <h2 class="rk_meta">{{- rk_lang_calories -}}</h2>
+                        <p>{{ rk_mf.recipe_calories }}</p>
+                      </div>
+                    {%- endif -%}
+                  </div>
+                  <div>
+                    {%- if rk_mf.recipe_description != blank -%}
+                      <p class="rk_description">
+                        {{- rk_mf.recipe_description -}}
+                        {%- if rk_mf.recipe_author != blank -%}
+                          <span class="rk_author">{{- rk_lang_author -}} {{ rk_mf.recipe_author }}</span>
+                        {%- endif -%}
+                      </p>
+
+                    {%- endif -%} 
+                  </div>
+                </div>
+                {%- if rk_mf.recipe_image != blank -%}
+                  <div class="rk_column rk_image">
+                    <img src="{{- rk_16_9_recipe_image -}}" alt="Image of {{- rk_mf.recipe_title -}}">
+                  </div>
+                {%- endif -%}
+              </div>
+            </div>
+            <span class="rk_hr"></span>
+            <div class="rk_body rk_grid">
+              <div class="rk_ingredients rk_column rk_column_third">
+                <h2 class="rk_column_heading">{{- rk_lang_ingredients -}}</h2>              
+                <ul>
+                  {%- for ingredient in rk_mf.recipe_ingredients -%}
+                    {%- if ingredient.type == 'heading' -%}
+                      <h4 class="rk_group_heading">{{- ingredient.heading_text -}}</h4>
+                    {%- else -%}
+                      {%- if ingredient.selected_product != blank -%}
+                        <li><a class="rk_has_link" target="_blank" href="/products/{{- ingredient.selected_product.handle -}}">{{- ingredient.ingredient -}}</a></li>
+                      {%- else -%}
+                        <li>{{- ingredient.ingredient -}}</li>
+                      {%- endif -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                </ul>
+              </div>
+              <div class="rk_directions rk_column">
+                <h2 class="rk_column_heading">{{- rk_lang_directions -}}</h2>
+                <ol>
+                  {%- for direction in rk_mf.recipe_directions -%}
+                    {%- if direction.type == 'heading' -%}
+                      </ol>
+                      <h4 class="rk_group_heading">{{- direction.heading_text -}}</h4>
+                      <ol>
+                    {%- else -%}
+                      <li>{{- direction.direction -}}</li>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </ol>
+              </div>
+            </div>
+            {%- if rk_mf.recipe_video != blank -%}
+            <div class="pe-no-print">
+              <span class="rk_hr"></span>
+              <div class="rk_column">
+                <h2 class="rk_column_heading">{{- rk_lang_video -}}</h2>
+                <iframe class="rk_video" src="{{- rk_video_embed_url -}}" width="100%"></iframe>
+              </div>
+            </div>
+            {%- endif -%}
+            {%- if rk_mf.recipe_note != blank -%}
+              <span class="rk_hr"></span>
+              <div class="rk_column">
+                <h2 class="rk_column_heading">{{- rk_lang_note -}}</h2>
+                <p>{{- rk_mf.recipe_note -}}</p>
+              </div>
+            {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- if recipe_design == 'rk_modern_vertical' -%}
+      <div class="rk_modern rk_modern_vertical" style="display: none;">
+        <div class="rk_container">
+          <div class="rk_card">
+            <div class="rk_header"> 
+              <div class="rk_grid">
+                <div class="rk_column rk_primary">
+                  <h1 class="rk_heading">{{- rk_mf.recipe_title -}}</h1>
+                  {% if rk_mf.enable_rating == true %}
+                    <div class="rk_rating">
+                      <div class="stars">
+                        <a class="star {% if current_rating == 5 %} is-selected {% endif %}"><svg><use xlink:href="#star"></use></svg></a>
+                        <a class="star {% if current_rating == 4 %} is-selected {% endif %}"><svg><use xlink:href="#star"></use></svg></a>
+                        <a class="star {% if current_rating == 3 %} is-selected {% endif %}"><svg><use xlink:href="#star"></use></svg></a>
+                        <a class="star {% if current_rating == 2 %} is-selected {% endif %}"><svg><use xlink:href="#star"></use></svg></a>
+                        <a class="star {% if current_rating == 1 %} is-selected {% endif %}"><svg><use xlink:href="#star"></use></svg></a>
+                      </div>
+                      <p id="rk_rating_thanks">{{- rk_lang_rating_count -}}</p>
+                    </div>
+                  {% endif %}
+                </div>
+                <div class="rk_column rk_actions">
+                  <ul class="rk_social">
+                    <li>
+                      <span onclick="PrintElements.print(document.getElementsByClassName('rk_container'));" class="rk_print">
+                        <?xml version="1.0" encoding="iso-8859-1"?><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 360 360" style="enable-background:new 0 0 360 360;" xml:space="preserve"> <g id="XMLID_503_"> <rect id="XMLID_873_" x="60" y="15" width="240" height="60"/> <path id="XMLID_874_" d="M360,105H0v180h60v-90h240v90h60V105z M315,165c-8.284,0-15-6.716-15-15s6.716-15,15-15s15,6.716,15,15 S323.284,165,315,165z"/> <path id="XMLID_877_" d="M90,345h180V225H90V345z M120,255h120v30H120V255z"/> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> </svg>
+                      </span>
+                    </li>
+                    <li>
+                      <a target="_blank" href="//twitter.com/share?text={{- rk_mf.recipe_title | url_param_escape -}}&amp;url={{- shop.url -}}{{- article.url -}}">
+                        <?xml version="1.0" encoding="iso-8859-1"?><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 455 455" style="enable-background:new 0 0 455 455;" xml:space="preserve"> <path style="fill-rule:evenodd;clip-rule:evenodd;" d="M0,0v455h455V0H0z M352.751,163.259c0.123,2.773,0.186,5.561,0.186,8.36 c0,85.403-65.002,183.876-183.873,183.876c-36.496,0-70.466-10.697-99.065-29.037c5.056,0.601,10.199,0.907,15.417,0.907 c30.278,0,58.143-10.331,80.262-27.668c-28.28-0.519-52.148-19.204-60.373-44.88c3.948,0.757,7.997,1.163,12.161,1.163 c5.894,0,11.604-0.794,17.027-2.268c-29.563-5.939-51.841-32.057-51.841-63.368c0-0.273,0-0.544,0.006-0.814 c8.712,4.84,18.676,7.748,29.271,8.084c-17.342-11.589-28.748-31.371-28.748-53.79c0-11.845,3.187-22.945,8.751-32.492 c31.873,39.101,79.493,64.828,133.203,67.526c-1.103-4.732-1.677-9.665-1.677-14.729c0-35.688,28.938-64.623,64.626-64.623 c18.589,0,35.385,7.847,47.173,20.406c14.719-2.895,28.551-8.276,41.038-15.681c-4.824,15.092-15.071,27.754-28.415,35.754 c13.074-1.563,25.528-5.038,37.118-10.178C376.336,142.766,365.38,154.149,352.751,163.259z"/> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> </svg>
+                        <span class="visually-hidden">Share on Twitter</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a target="_blank" href="//www.facebook.com/sharer.php?u={{- shop.url -}}{{- article.url -}}">
+                        <?xml version="1.0" encoding="iso-8859-1"?><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 29.94 29.94" style="enable-background:new 0 0 29.94 29.94;" xml:space="preserve"> <g> <path d="M27.56,0.684H2.383C1.065,0.684,0,1.748,0,3.064v23.813c0,1.312,1.065,2.379,2.383,2.379H27.56 c1.312,0,2.38-1.066,2.38-2.379V3.064C29.939,1.748,28.871,0.684,27.56,0.684z M20.125,9.167c-0.619-0.362-1.11-0.648-1.727-0.648 c-0.604,0-1.12,0.151-1.384,0.405c-0.264,0.252-0.395,0.74-0.395,1.461v1.067h3.229l-0.699,2.968h-2.53v9.862h-4.056V14.42H10.67 v-2.968h1.895v-1.133c0-1.193,0.143-1.907,0.425-2.496c0.281-0.587,0.826-1.241,1.584-1.611c0.757-0.369,1.877-0.555,3.036-0.555 c1.188,0,2.116,0.396,3.254,0.715L20.125,9.167z"/> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> </svg>
+                        <span class="visually-hidden">Share on Facebook</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a target="_blank" href="//pinterest.com/pin/create/button/?url={{- shop.url -}}{{- article.url -}}&amp;media={{- rk_mf.recipe_image -}}&amp;description={{- rk_mf.recipe_title | url_param_escape-}}">
+                        <?xml version="1.0" encoding="iso-8859-1"?><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 455 455" style="enable-background:new 0 0 455 455;" xml:space="preserve"> <path style="fill-rule:evenodd;clip-rule:evenodd;" d="M0,0v455h455V0H0z M251.83,297.635c-19.57,0-37.973-10.516-44.227-22.557 c0,0-10.516,41.691-12.71,49.78c-7.84,28.437-30.926,56.874-32.684,59.176c-1.229,1.649-4.013,1.105-4.324-1.026 c-0.482-3.656-6.379-39.497,0.545-68.728c3.469-14.701,23.272-98.627,23.272-98.627s-5.771-11.543-5.771-28.624 c0-26.85,15.556-46.856,34.939-46.856c16.474,0,24.377,12.337,24.377,27.177c0,16.521-10.516,41.318-15.977,64.216 c-4.511,19.212,9.598,34.831,28.546,34.831c34.332,0,57.371-43.993,57.371-96.138c0-39.684-26.678-69.397-75.292-69.397 c-54.867,0-89.075,40.96-89.075,86.649c0,15.805,4.667,26.928,11.963,35.499c3.345,4.014,3.765,5.585,2.613,10.143 c-0.917,3.344-2.862,11.309-3.765,14.529c-1.151,4.559-4.931,6.191-9.053,4.496c-25.217-10.329-37.009-37.989-37.009-69.164 C105.569,131.619,148.832,70,234.874,70c69.101,0,114.557,50.013,114.557,103.667C349.431,244.635,309.995,297.635,251.83,297.635z" /> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> </svg>
+                        <span class="visually-hidden">Share on Pinterest</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="rk_grid rk_secondary">
+                <div class="rk_column rk_details">
+                  <div class="rk_grid">
+                    {%- if rk_mf.recipe_category != blank -%}
+                      <div class="rk_column">
+                        <h2 class="rk_meta">{{- rk_lang_category -}}</h2>
+                        <p>{{- rk_mf.recipe_category -}}</p>
+                      </div>
+                    {%- endif -%}
+                    {%- if rk_mf.serving_size != blank -%}
+                      <div class="rk_column">
+                        <h2 class="rk_meta">{{- rk_lang_serving -}}</h2>
+                        <p>{{- rk_mf.serving_size -}}</p>
+                      </div>
+                    {%- endif -%}
+                    {%- if rk_mf.prep_time != blank -%}
+                      <div class="rk_column">
+                        <h2 class="rk_meta">{{- rk_lang_prep_time -}}</h2>
+                        <p>{{ rk_mf.prep_time }} {{ rk_lang_minutes }}</p>
+                      </div>
+                    {%- endif -%}
+                    {%- if rk_mf.cook_time != blank -%}
+                      <div class="rk_column">
+                        <h2 class="rk_meta">{{- rk_lang_cook_time -}}</h2>
+                        <p>{{ rk_mf.cook_time }} {{ rk_lang_minutes }}</p>
+                      </div>
+                    {%- endif -%}
+                    {%- if rk_mf.recipe_calories != blank -%}
+                      <div class="rk_column">
+                        <h2 class="rk_meta">{{- rk_lang_calories -}}</h2>
+                        <p>{{ rk_mf.recipe_calories }}</p>
+                      </div>
+                    {%- endif -%}
+                  </div>
+                  <div>
+                    {%- if rk_mf.recipe_description != blank -%}
+                      <p class="rk_description">
+                        {{- rk_mf.recipe_description -}}
+                        {%- if rk_mf.recipe_author != blank -%}
+                          <span class="rk_author">{{- rk_lang_author -}} {{ rk_mf.recipe_author }}</span>
+                        {%- endif -%}
+                      </p>
+                    {%- endif -%}
+                  </div>
+                </div>
+                {%- if rk_mf.recipe_image != blank -%}
+                  <div class="rk_column rk_image">
+                    <img src="{{- rk_16_9_recipe_image -}}" alt="Image of {{- rk_mf.recipe_title -}}">
+                  </div>
+                {%- endif -%}
+              </div>
+            </div>
+            <span class="rk_hr"></span>
+            <div class="rk_body">
+              <div class="rk_ingredients">
+                <h2 class="rk_column_heading">{{- rk_lang_ingredients -}}</h2>
+                <ul>
+                  {%- for ingredient in rk_mf.recipe_ingredients -%}
+                    {%- if ingredient.type == 'heading' -%}
+                      <h4 class="rk_group_heading">{{- ingredient.heading_text -}}</h4>
+                    {%- else -%}
+                      {%- if ingredient.selected_product != blank -%}
+                        <li><a class="rk_has_link" target="_blank" href="/products/{{- ingredient.selected_product.handle -}}">{{- ingredient.ingredient -}}</a></li>
+                      {%- else -%}
+                        <li>{{- ingredient.ingredient -}}</li>
+                      {%- endif -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                </ul>
+              </div>
+              <span class="rk_hr"></span>
+              <div class="rk_directions rk_column">
+                <h2 class="rk_column_heading">{{- rk_lang_directions -}}</h2>
+                <ol>
+                  {%- for direction in rk_mf.recipe_directions -%}
+                    {%- if direction.type == 'heading' -%}
+                      </ol>
+                      <h4 class="rk_group_heading">{{- direction.heading_text -}}</h4>
+                      <ol>
+                    {%- else -%}
+                      <li>{{- direction.direction -}}</li>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </ol>
+              </div>
+              {%- if rk_mf.recipe_video != blank -%}
+              <div class="pe-no-print">
+                <span class="rk_hr"></span>
+                <div class="rk_column">
+                  <h2 class="rk_column_heading">{{- rk_lang_video -}}</h2>
+                  <iframe class="rk_video" src="{{- rk_video_embed_url -}}" width="100%"></iframe>
+                </div>
+              </div>
+              {%- endif -%}
+              {%- if rk_mf.recipe_note != blank -%}
+                <span class="rk_hr"></span>
+                <div class="rk_column">
+                  <h2 class="rk_column_heading">{{- rk_lang_note -}}</h2>
+                  <p>{{- rk_mf.recipe_note -}}</p>
+                </div>
+              {%- endif -%}
+            </div>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+
+  {% comment %}
+    Print Javascript
+  {% endcomment %}
+  <script>var PrintElements=(function(){"use strict";var hideFromPrintClass="pe-no-print";var preservePrintClass="pe-preserve-print";var preserveAncestorClass="pe-preserve-ancestor";var bodyElementName="BODY";var _hide=function(element){if(!element.classList.contains(preservePrintClass)){element.classList.add(hideFromPrintClass)}};var _preserve=function(element,isStartingElement){element.classList.remove(hideFromPrintClass);element.classList.add(preservePrintClass);if(!isStartingElement){element.classList.add(preserveAncestorClass)}};var _clean=function(element){element.classList.remove(hideFromPrintClass);element.classList.remove(preservePrintClass);element.classList.remove(preserveAncestorClass)};var _walkSiblings=function(element,callback){var sibling=element.previousElementSibling;while(sibling){callback(sibling);sibling=sibling.previousElementSibling}sibling=element.nextElementSibling;while(sibling){callback(sibling);sibling=sibling.nextElementSibling}};var _attachPrintClasses=function(element,isStartingElement){_preserve(element,isStartingElement);_walkSiblings(element,_hide)};var _cleanup=function(element,isStartingElement){_clean(element);_walkSiblings(element,_clean)};var _walkTree=function(element,callback){var currentElement=element;callback(currentElement,true);currentElement=currentElement.parentElement;while(currentElement&&currentElement.nodeName!==bodyElementName){callback(currentElement,false);currentElement=currentElement.parentElement}};var _print=function(elements){for(var i=0;i<elements.length;i+=1){_walkTree(elements[i],_attachPrintClasses)}window.print();for(i=0;i<elements.length;i+=1){_walkTree(elements[i],_cleanup)}};return{print:_print}})();</script>
+  {% comment %}
+    End Print Javascript
+  {% endcomment %}
+
+  {%- comment -%}
+    Javascript for rating and other functions
+  {%- endcomment -%}
+  {% if rk_mf.enable_rating == true %}
+    <script>
+      (function(){var recipe_id={{ rk_mf.recipe_id }};var starContainer=document.querySelector('.stars');var starsNodeList=starContainer.children;var stars=Array.prototype.slice.call(starsNodeList);var totalStars=stars.length;starContainer.addEventListener('click',function handler(e){this.removeEventListener("click",handler);var index=stars.indexOf(e.target);var user_rating=totalStars-index;stars.forEach(function(el){el.classList.remove('is-selected')});e.target.classList.add('is-selected');fetch("https://my.recipekit.app/rating",{headers:{'Accept':'application/json','Content-Type':'application/json'},method:"POST",body:JSON.stringify({recipe_id:recipe_id,user_rating:user_rating})}).then(function(res){document.getElementById('rk_rating_thanks').innerHTML='{{ rk_lang_rating_thanks }}'}).catch(function(res){document.getElementById('rk_rating_thanks').innerHTML='{{ rk_lang_rating_thanks }}';console.log('Woops! Something went wrong while rating this recipe.')})})})();
+    </script>
+  {% endif %}
+  {% comment %}
+    End of RK Javascript
+  {% endcomment %}
+  
+  {%- comment -%}
+    Use the shop's Recipekit settings to overwrite the main colours of the design
+  {%- endcomment -%}
+  {%- if rk_settings.design_border == false -%}
+    <style>
+      #rk_parent .rk_container {
+        border: none !important;
+      }
+    </style>
+  {%- endif -%} 
+  <style>
+    #rk_parent .rk_container {
+      border-color: {{- design_colour -}} !important;
+    }
+    #rk_parent .rk_hr {
+      border-color: {{- design_colour -}} !important;
+    }
+    #rk_parent .rk_social svg {
+      fill: {{- design_colour -}} !important;
+    }
+    .star.is-selected svg, 
+    .star.is-selected ~ .star svg {
+      fill: {{- design_colour -}} !important;
+    }
+    
+    .star:hover svg, 
+    .star:hover ~ .star svg {
+      opacity: 0.8;
+      fill: {{- design_colour -}} !important;
+    }
+  </style>
+  {%- if rk_settings.custom_css != blank -%}
+    <style>
+      {{ rk_settings.custom_css }}
+    </style>
+  {%- endif -%} 
+  {% comment %}
+    End CSS overwriting
+  {% endcomment %}
+{%- endif -%}

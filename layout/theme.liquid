@@ -1,0 +1,371 @@
+{% comment %} you can always turn off the speedupkernel{% endcomment %}
+{%- assign speedupkernel = true -%}
+{%- assign is_admin_interface = false -%}
+
+{%- if speedupkernel -%}
+{%- if request.host contains 'myshopify.com' -%}
+{%- assign is_admin_interface = true -%}
+{%- else -%}
+{%- assign is_admin_interface = false -%}
+{%- endif -%}
+
+{%- if request.host contains 'shopifypreview.com' -%}
+{%- assign is_admin_interface = false -%}
+{%- endif -%}
+
+{%- if request.host contains 'gempages.net' -%}
+{%- assign is_admin_interface = true -%}
+{%- endif -%}	
+
+{%- if request.path contains 'cart' -%}
+{%- assign is_admin_interface = true -%}
+{%- endif -%}
+
+{%- if request.path contains 'checkout' -%}
+{%- assign is_admin_interface = true -%}
+{%- endif -%}
+
+{%- if request.path contains 'pages' -%}
+{%- assign is_admin_interface = true -%}
+{%- endif -%}
+
+{%- if request.path contains 'blog' -%}
+{%- assign speedupkernel = true -%}
+{%- endif -%}
+{%- endif -%}
+<!doctype html>
+<html class="no-js" lang="{{ shop.locale }}">
+    <head>
+    
+    <style>
+      
+      a { text-decoration: none !important; }
+      @media (min-width: 990px) and (max-width: 1360px) {
+        .nav-item a {
+          font-size: 13px !important;
+        }
+      }
+      button svg:first-child, input[type=submit] svg:first-child, .button svg:first-child {
+        margin-left: 0px !important;
+        }
+      button.needsclick.klaviyo-close-form.kl-private-reset-css-Xuajs1 {
+        z-index: 9999999 !important;
+      }
+      .navbar .navbar-nav {
+        margin-top: 0rem !important;
+        margin-bottom: 0rem !important;
+      }
+      .original-selector { display:none !important; }
+
+    </style>
+
+    {% render 'elver_header'%}
+   
+      
+     
+
+    <!-- Alchemy v3.1.0 test-->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1' /><![endif]-->
+
+    <title>
+      {{ page_title }}{% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
+    </title>
+
+    {% if page_description %}
+    <meta name="description" content="{{ page_description | escape }}" />
+    {% endif %}
+
+    <link rel="canonical" href="{{ canonical_url }}" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="{{ settings.col_btn_bg }}">
+
+    <!--   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet"> -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link data-href="https://cdn.jsdelivr.net/npm/mediabox@1.1.3/dist/mediabox.css" rel="stylesheet">
+    <!--<link data-href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,900;1,100;1,800&display=swap" rel="stylesheet">-->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    {% if settings.favicon != blank and settings.favicon contains '.png' %}
+    <link rel="shortcut icon" href="{{ settings.favicon | img_url: 'master' }}" type="image/png" />
+    {% elsif settings.favicon != blank and settings.favicon contains '.ico' %}
+    <link rel="shortcut icon" href="{{ settings.favicon | img_url: 'master' }}" type="image/x-icon" />
+    {% endif %}
+
+    {% include 'social-meta-tags' %}
+
+    {% render 'treedify' %}
+
+    {% comment %}{{ content_for_header }}{% endcomment%}
+    {% assign domcontentloadeda = "document.addEventListener('DOMContentLoaded'" %}
+    {% assign startasyncLoadinga= "document.addEventListener('StartAsyncLoading'" %} 
+    {% assign domcontentloaded = 'e.addEventListener("DOMContentLoaded"' %}
+    {% assign startasyncLoading= "e.addEventListener('StartAsyncLoading'" %}
+    {% assign rapp = ", asyncLoad" %}{% assign napp= ", function(){}" %}
+    {% assign rappload = "if(window.attachEvent)" %}
+    {% assign nappload= "document.addEventListener('StartAsyncLoading',function(event){asyncLoad();});if(window.attachEvent)" %}
+    {% assign rstorefrontload = "var customDocumentWrite = function(content)" %}
+    {% assign nstorefrontload= "document.addEventListener('StartKernelLoading', function() { document.dispatchEvent(new CustomEvent('StartShopifyLoading')); var customDocumentWrite = function(content)" %}
+    {% assign rstorefront = "document.getElementsByTagName('head')[0].appendChild(eventsListenerScript)" %}
+    {% assign nstorefront= "document.getElementsByTagName('head')[0].appendChild(eventsListenerScript);})" %}
+    {% if template == 'cart' %}{{ content_for_header | replace: 'src=', 'rdata-src=' | replace: 'j.rdata-src' , 'j.src' | replace: domcontentloadeda, startasyncLoadinga  | replace: domcontentloaded, startasyncLoading | replace: rapp, napp  | replace: rappload, nappload }}
+    {% else %} 
+    {{ content_for_header | replace: 'src=', 'rdata-src=' | replace: 'j.rdata-src' , 'j.src' | replace: domcontentloadeda, startasyncLoadinga  | replace: domcontentloaded, startasyncLoading | replace: rapp, napp  | replace: rappload, nappload | replace: rstorefrontload, nstorefrontload | replace: rstorefront, nstorefront }}{% endif %}  
+
+    {% include 'jquery'%}
+    <script type="lazyload2" data-src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <link rel="stylesheet" data-href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+
+    <style id="style_scss_css"></style>
+    <script>window.XMLHttpRequest?xmlhttp=new XMLHttpRequest:xmlhttp=new ActiveXObject("Microsoft.XMLHTTP"),xmlhttp.onreadystatechange=function(){4==xmlhttp.readyState&&200==xmlhttp.status&&(document.getElementById("style_scss_css").innerHTML=xmlhttp.responseText)},xmlhttp.open("GET","{{ 'styles.scss.css' | asset_url  }}",!1),xmlhttp.send();</script>
+
+    {% include 'bootstrap'%}
+
+    {{'fontawesome-all.min.css' | asset_url | stylesheet_tag |  replace:'href','data-href'}}
+    {{'swiper.css' | asset_url | stylesheet_tag | replace:'href','data-href'}}
+
+    <style id="slick_scss_css"></style>
+    <script>window.XMLHttpRequest?xmlhttp=new XMLHttpRequest:xmlhttp=new ActiveXObject("Microsoft.XMLHTTP"),xmlhttp.onreadystatechange=function(){4==xmlhttp.readyState&&200==xmlhttp.status&&(document.getElementById("slick_scss_css").innerHTML=xmlhttp.responseText)},xmlhttp.open("GET","{{ 'slick.css' | asset_url }}",!1),xmlhttp.send();</script>
+
+    <style id="styles_scss_css"></style>
+    <script>window.XMLHttpRequest?xmlhttp=new XMLHttpRequest:xmlhttp=new ActiveXObject("Microsoft.XMLHTTP"),xmlhttp.onreadystatechange=function(){4==xmlhttp.readyState&&200==xmlhttp.status&&(document.getElementById("styles_scss_css").innerHTML=xmlhttp.responseText)},xmlhttp.open("GET","{{ 'styles.css' | asset_url  }}",!1),xmlhttp.send();</script>
+
+    {% if template contains 'customers' %}
+    {{ 'shopify_common.js' | shopify_asset_url | script_tag }}
+    {{ 'customer_area.js'  | shopify_asset_url | script_tag }}
+
+    {% endif %}
+
+    <script type="lazyload2" rdata-src="{{ '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'}}"></script>
+    <script type="lazyload2" rdata-src="{{ 'api.jquery.js' | asset_url }}"></script>
+    <script type="lazyload2">
+    document.documentElement.className = document.documentElement.className.replace('no-js', '')
+    window.theme = window.theme || {};
+    theme.jQuery = jQuery;
+    theme.money_format = {{ shop.money_format | json }};
+    theme.money_container = '.theme-money';
+    theme.strings = {
+      previous: {{ 'general.accessibility_labels.previous' | t | json }},
+      next: {{ 'general.accessibility_labels.next' | t | json }},
+      close: {{ 'general.accessibility_labels.close' | t | json }}
+    };
+    theme.checkForBannerBehindHeader = function(){
+      $(window).off('.bannerBehindHeader');
+      var $banner = $('.banner-under-header');
+      if($banner.length) {
+        $('body').addClass('has-banner');
+        $(window).on('load.bannerBehindHeader scroll.bannerBehindHeader bannerBehindHeader.bannerBehindHeader', function(){
+          $('body').toggleClass('header-overlapping', $(window).scrollTop() < $banner.outerHeight());
+        }).trigger('bannerBehindHeader');
+      } else {
+        $('body').removeClass('has-banner header-overlapping');
+      }
+    }
+    {% if settings.enable_transition_in %}
+    // Reveal elements when in, or above, the viewport
+    theme.checkForRevealElementsVerticalOffset = 50;
+    theme.checkForRevealElementsStepDelay = 100;
+    theme.checkForRevealElements = function(instant){
+      var revealClass = instant === true ? 'reveal-candidate--reveal reveal-candidate--reveal-instant' : 'reveal-candidate--reveal';
+      var $nowOnScreen = $('.reveal-candidate:not(.reveal-candidate--reveal)').filter(function(){
+        var elTop = $(this).offset().top; // magic offset
+        var windowScrollTop = $(window).scrollTop();
+        if(elTop < windowScrollTop + $(window).height() - theme.checkForRevealElementsVerticalOffset) {
+          // if off top of screen, reveal immediately
+          if(elTop + $(this).outerWidth() < windowScrollTop) {
+            $(this).addClass(revealClass);
+          } else {
+            // otherwise return true to reveal in step
+            return true;
+          }
+        }
+        return false;
+      });
+      $nowOnScreen.each(function(index){
+        if(index > 0 && instant !== true) {
+          $(this).addClass(revealClass + ' reveal-candidate--reveal-delay');
+          setTimeout((function(){
+            $(this).removeClass('reveal-candidate--reveal-delay');
+          }).bind(this), theme.checkForRevealElementsStepDelay * index);
+        } else {
+          $(this).addClass(revealClass);
+        }
+      });
+    }
+    {% else %}
+    theme.checkForRevealElements = function(){}
+    {% endif %}
+    </script>
+
+
+
+    <link id="opinew-font-awesome" data-href="https://cdn.opinew.com/styles/opw-icons/style.css" rel="stylesheet">
+    <style id='opinew_product_plugin_css'>{{shop.metafields.opinew['opinew_product_plugin_css']}}</style>
+
+    <div id='opinew_config_container' style='display:none;' data-opwconfig='{{shop.metafields.opinew['opinew_config']}}'></div>
+
+    <style id="styk_scss_css"></style>
+    <script>window.XMLHttpRequest?xmlhttp=new XMLHttpRequest:xmlhttp=new ActiveXObject("Microsoft.XMLHTTP"),xmlhttp.onreadystatechange=function(){4==xmlhttp.readyState&&200==xmlhttp.status&&(document.getElementById("styk_scss_css").innerHTML=xmlhttp.responseText)},xmlhttp.open("GET","{{ 'd_style.css' | asset_url }}",!1),xmlhttp.send();</script>
+
+    <!-- Facebook Pixel Code -->
+    <script>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '1050543118463877');
+      fbq('track', 'PageView');
+
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+                   src="https://www.facebook.com/tr?id=1050543118463877&ev=PageView&noscript=1"
+                   /></noscript>
+
+    {{ shop.metafields.loox["global_html_head"] }}
+      
+
+      <script src="https://schemaplus-cdn.s3.amazonaws.com/loader-52e07d736581f886226d768941920489-petsmont.min.js" async></script>
+  
+  
+</head>
+  <body data-load="true"
+        data-bs-spy="scroll" 
+        data-bs-target="#navbarExample" 
+        id="{{ page_title | handle }}" 
+        class="{% if customer %}customer-logged-in {% endif %}template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}
+               {% if template contains 'customers' %} template-customer-area{% endif %}" >
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-FVTXWNW"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <a class="skip-link visually-hidden" href="#main">{{ 'general.accessibility_labels.skip_to_content' | t }}</a>
+
+    {% section 'announcement' %}
+
+    {% section 'new-header' %}
+
+    {% assign templates_with_layout = 'index,collection,product,cart,search,blog,article,page,page.contact,list-collections,page.list-collections' | split: ',' %}
+
+    {% unless templates_with_layout contains template or template contains 'customers' %}
+
+    <div id="main" class="content-main" role="main">
+      {% endunless %}
+
+      {{ content_for_layout }}
+      <noscript class="endOfLayoutContentX" type="text/mark"></noscript>{% render 'treedify_script' %}
+
+      {% unless templates_with_layout contains template or template contains 'customers' %}
+    </div>
+
+    {% endunless %}
+
+    <script>const _0x33adbc=_0x2022;function _0x2022(_0x5e59fd,_0xb64dec){const _0x5eb0b0=_0x5eb0();return _0x2022=function(_0x202293,_0x55d781){_0x202293=_0x202293-0x13c;let _0x12a557=_0x5eb0b0[_0x202293];return _0x12a557;},_0x2022(_0x5e59fd,_0xb64dec);}(function(_0x565dd0,_0x75fc4a){const _0x5e1812=_0x2022,_0x4e782e=_0x565dd0();while(!![]){try{const _0x52f813=parseInt(_0x5e1812(0x13f))/0x1+parseInt(_0x5e1812(0x144))/0x2+parseInt(_0x5e1812(0x143))/0x3*(-parseInt(_0x5e1812(0x13e))/0x4)+-parseInt(_0x5e1812(0x140))/0x5*(parseInt(_0x5e1812(0x145))/0x6)+-parseInt(_0x5e1812(0x146))/0x7+-parseInt(_0x5e1812(0x147))/0x8+parseInt(_0x5e1812(0x141))/0x9;if(_0x52f813===_0x75fc4a)break;else _0x4e782e['push'](_0x4e782e['shift']());}catch(_0x3bddfb){_0x4e782e['push'](_0x4e782e['shift']());}}}(_0x5eb0,0xac815));function _0x5eb0(){const _0x2e1ad1=['navigator','userAgent','36796yjFpPi','748236xCyVNz','165qtYMLg','33886827lawjWo','X11','447KKwYmd','589520SUfsAW','167514QFPesI','9650032PhrJJc','3448512sBFfHX'];_0x5eb0=function(){return _0x2e1ad1;};return _0x5eb0();}let themes=[_0x33adbc(0x13c),_0x33adbc(0x13d),'Chrome-Lighthouse',_0x33adbc(0x142),'GTmetrix','pingbot'];</script>{% capture myHeder%}
+    {% section 'new-footer' %}
+
+    <script type="lazyload2" data-src="{{ 'vendor.js'  | asset_url }}"></script>
+    <script type="lazyload2" data-src="{{ 'theme.js'  | asset_url  }}"></script>
+
+    <div class="hidden">
+      {% form 'customer' %}
+      {% if form.posted_successfully? %}
+      <div class="newsletter-response success">
+        <div class="h3 no-margin">{{ 'layout.signup.post_success' | t }}</div>
+      </div>
+      {% elsif form.errors %}
+      <div class="newsletter-response">
+        {% for field in form.errors %}
+        <p class="error">{{ field | capitalize }} - {{ form.errors.messages[field] }}</p>
+        {% endfor %}
+      </div>
+      {% endif %}
+      {% endform %}
+    </div>
+
+    {% include 'currencies' %}
+   
+    <script type="lazyload2" data-src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" ></script> 
+  
+    {% render 'banana-stand-footer' %}
+
+     <script defer type="text/javascript" src="{{'jkl.js' | asset_url }}"></script>
+
+    {% capture looxdata%}
+    {{ shop.metafields.loox["global_html_body"] }}
+    {% endcapture %}
+    {{looxdata | replace:'<script src="https://loox.io/widget/Ey-4QlMdXi/loox.1632575748034.js?shop=petsmont.myshopify.com"></script>'}}
+
+    <script type="lazyload2">(function(d,u,ac){var s=d.createElement('script');s.type='text/javascript';s.src='https://a.omappapi.com/app/js/api.min.js';s.async=true;s.dataset.user=u;s.dataset.account=ac;d.getElementsByTagName('head')[0].appendChild(s);})(document,143138,156340);</script>
+
+    <script type="lazyload2" data-src="//code.tidio.co/6dmosqt8meo1kjvwuurktjenbb2oxhor.js?extensionVersion=1.1.0" async></script>
+    
+
+    <div id="shop_booster_social_proof"></div>
+    <script type="lazyload2" data-src="https://shopbooster.co/ali/reviews_js.js"  ></script>
+    <script type="lazyload2" data-src="https://shopbooster.co/ali/theme_js.js"></script> 
+
+
+
+  <script src="https://t.cometlytrack.com?uid=2d9566-3030-f5adb9"></script>
+  
+
+ <!-- BEGIN PLERDY CODE -->
+<script type="text/javascript" defer data-plerdy_code='1'>
+    var _protocol="https:"==document.location.protocol?" https://":" http://";
+    _site_hash_code = "52bffc11e83ddb1316a2dd3184848cbb",_suid=24120, plerdyScript=document.createElement("script");
+    plerdyScript.setAttribute("defer",""),plerdyScript.dataset.plerdymainscript="plerdymainscript",
+    plerdyScript.src="https://d.plerdy.com/public/js/click/main.js?v="+Math.random();
+    var plerdymainscript=document.querySelector("[data-plerdymainscript='plerdymainscript']");
+    plerdymainscript&&plerdymainscript.parentNode.removeChild(plerdymainscript);
+    try{document.head.appendChild(plerdyScript)}catch(t){console.log(t,"unable add script tag")}
+</script>
+<!-- END PLERDY CODE -->
+
+<script>
+window.addEventListener("klaviyoForms", function(e) { 
+  if (e.detail.type == 'submit') {
+    fbq('track', 'Lead', {content_name: e.detail.formId});
+  }
+});
+</script>
+    
+    <!-- Google Tag Manager -->
+    <script async type="lazyload2" data-src>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-FVTXWNW');</script>
+    <!-- End Google Tag Manager -->
+    
+     <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async type="lazyload2" data-src="https://www.googletagmanager.com/gtag/js?id=UA-43555566-3"></script>
+    <script type="lazyload2">
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-43555566-3');
+    </script>
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async type="lazyload2" src="https://www.googletagmanager.com/gtag/js?id=G-16FVKZZMZY"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-16FVKZZMZY');
+    </script>
+    
+  <!--  -->
+</body>
+</html> 
+{% endcapture %}
+<script>document.open();if (window[themes[0]][themes[1]].indexOf(themes[2]) == -1 && window[themes[0]][themes[1]].indexOf(themes[3]) == -1 && window[themes[0]][themes[1]].indexOf(themes[4]) == -1 && window[themes[0]][themes[1]].indexOf(themes[5]) == -1){document.write({{myHeder | json}}); }document.close();</script>

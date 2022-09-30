@@ -1,0 +1,197 @@
+<script>
+
+  var jsObserver,
+      lazyLoadJs = {};
+
+  document.addEventListener('DOMContentLoaded', function () {
+    if ( !( 'IntersectionObserver' in window ) ) {
+      // https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API#See_also
+      getScript('https://cdn.jsdelivr.net/npm/intersection-observer@0.11.0/intersection-observer.js', initLazyJS );
+
+    }
+    else {
+      initLazyJS();
+
+    }
+  });
+
+  // https://stackoverflow.com/a/28002292 or use jQuery's $.getScript to reduce duplicate/unnecessary code
+  function getScript(source, callback) {
+    var script = document.createElement('script');
+    var prior = document.getElementsByTagName('script')[0];
+    script.async = 1;
+
+    script.onload = script.onreadystatechange = function( _, isAbort ) {
+      if(isAbort || !script.readyState || /loaded|complete/.test(script.readyState) ) {
+        script.onload = script.onreadystatechange = null;
+        script = undefined;
+
+        if(!isAbort && callback) setTimeout(callback, 0);
+      }
+    };
+
+    script.src = source;
+    prior.parentNode.insertBefore(script, prior);
+  }
+
+  // https://vanillajstoolkit.com/helpers/isinviewport/
+  function isInViewport(elem) {
+    var distance = elem.getBoundingClientRect();
+    return (
+      distance.top >= 0 &&
+      distance.left >= 0 &&
+      distance.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      distance.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+  }
+
+  function initLazyJS()
+  {
+    var options = {
+      root: null,
+      rootMargin: '50px',
+      threshold: 0
+    };
+
+    jsObserver = new IntersectionObserver( function (entries) {
+      for ( var i = 0; i < entries.length; ++i) {
+        if ( entries[i].isIntersecting && entries[i].target.getAttribute('data-selector') in lazyLoadJs ) {
+          var selector = entries[i].target.getAttribute('data-selector'),
+              obj = lazyLoadJs[ selector ],
+              srcLength = obj.src.length;
+
+          for ( index = 1; index <= srcLength; index++ ) {
+
+            getScript(
+              obj.src[index-1],
+              index == srcLength && 'callback' in obj ? obj.callback: null
+            );		
+          }
+          // no files to load, just call callback at this point
+          if ( srcLength == 0 && obj.callback != null ) {
+            obj.callback(selector);
+          }
+
+          // START checking what to delete, so this won't be executed again on next intersection. Delete by default though
+          var deleteBySelectors = 'delete' in obj ? obj['delete']: [ selector ];
+          for ( index = 0; index < deleteBySelectors.length; index++ ) {
+            delete lazyLoadJs[ deleteBySelectors[index] ];
+          }
+          if ( selector in deleteBySelectors ) {
+            jsObserver.unobserve(entries[i].target);
+          }
+          // END
+        }
+      }
+    }, options);
+
+    var tmp = {};
+    tmp = {
+
+      '[data-load="true"]':{
+
+        'src' : [
+
+          "{{'bootstrap.min.js' | asset_url }}"
+          
+        ],
+        'prefetch' : false,
+        'callback' : function () { 
+          
+          console.log('Theme Resources are ready for use'); 
+        
+          
+          if(location.pathname == "/")
+          {
+          
+            document.querySelectorAll('[shougn-scripts]').forEach((sc)=>{
+            
+              if(sc.dataset.src){
+
+                source = sc.dataset.src
+
+                var script = document.createElement('script');
+                var prior = document.getElementsByTagName('script')[0];
+                script.async = 1;
+
+                script.onload = script.onreadystatechange = function( _, isAbort ) {
+                  if(isAbort || !script.readyState || /loaded|complete/.test(script.readyState) ) {
+                    script.onload = script.onreadystatechange = null;
+                    script = undefined;
+
+                  }
+                };
+
+                script.src = source;
+                prior.parentNode.insertBefore(script, prior);
+                console.log("script loaded" + source);
+              }
+            
+            })
+          }
+          var evt = document.createEvent('Event');  
+          evt.initEvent('DOMReady', false, false);  
+          window.dispatchEvent(evt);
+        
+        }
+      }
+    };
+    if ( !navigator.connection || !navigator.connection.saveData ) {
+    }
+    // END
+
+    for (var selector in tmp) {
+      if (!tmp.hasOwnProperty(selector) ) {
+        continue;
+      }
+
+      // add them to the observer
+      addLazyloadJs( selector, tmp[selector] );
+    }
+  }
+
+  function addLazyloadJs( selector, obj ) 
+  {
+    if ( document.querySelectorAll(selector).length == 0 ) {
+      return false;
+    }
+
+    var srcLength = 'src' in obj ? obj.src.length: 0;
+    // load it right away when already in viewport/above the fold from the start
+    if ( typeof jsObserver === 'undefined' || isInViewport( document.querySelector( selector ) ) ) {
+      for ( index = 1; index <= srcLength; index++ ) {
+        getScript(
+          obj.src[index-1],
+          index == srcLength && 'callback' in obj ? obj.callback: null
+        );		
+      }
+
+      // no files to load, just call callback
+      if ( srcLength == 0 && obj.callback != null ) {
+        obj.callback(selector);
+      }
+      return true;
+    }
+
+    if ( !('prefetch' in obj) || obj.prefetch == true ) {
+      // prefetch so it's there when needed
+      for ( index = 1; index <= srcLength; index++ ) {
+        var preloadLink	= document.createElement("link");
+        preloadLink.rel = 'prefetch';
+        preloadLink.as	= 'script';
+        preloadLink.href= obj.src[index-1];
+        document.head.appendChild( preloadLink );			
+      }
+    }
+
+    // load on demand by starting to observe the element
+    var elms = document.querySelectorAll(selector);
+    for (i = 0; i < elms.length; ++i) {
+      jsObserver.observe( elms[i] );
+      elms[i].setAttribute('data-selector', selector);
+    }
+
+    lazyLoadJs[selector] = obj;
+  }
+
+</script>

@@ -1,0 +1,50 @@
+{% if shop.enabled_currencies != blank and shop.enabled_currencies.size > 1 %}
+  <div class="switcher switcher--native">
+    <div class="switcher-drop">
+      <div class="inner">
+        {% form 'currency' %}
+          <label for="currency">{{ 'general.multi_currency.pick_a_currency' | t }} </label>
+          <select name="currency" id="currency" onchange="this.form.submit()" aria-label="{{ 'general.multi_currency.pick_a_currency' | t | escape }}">
+            {%- for currency in shop.enabled_currencies -%}
+                <option {% if currency == cart.currency %}selected="true"{% endif %}>{{ currency.iso_code }}</option>
+            {%- endfor -%}
+          </select>
+        {% endform %}
+      </div>
+    </div>
+    <div class="switcher-flags">
+      {% include 'currency-flag', code: shop.currency %}
+      {%- for currency in shop.enabled_currencies -%}
+        {%- if currency.iso_code != shop.currency -%}
+          {% include 'currency-flag', code: currency.iso_code %}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+{% elsif settings.enable_theme_currency_converter %}
+  {%- assign codes = 'AED,ALL,AMD,ANG,AOA,ARS,AUD,AWG,AZN,BAM,BBD,BDT,BGN,BHD,BND,BOB,BRL,BSD,BTN,BWP,BYR,BZD,CAD,CHF,CLP,CNY,COP,CRC,CZK,DKK,DOP,DZD,EGP,ETB,EUR,FJD,GBP,GEL,GHS,GMD,GTQ,GYD,HKD,HNL,HRK,HUF,IDR,ILS,INR,ISK,JEP,JMD,JOD,JPY,KES,KGS,KHR,KRW,KWD,KYD,KZT,LBP,LKR,LTL,LVL,MAD,MDL,MGA,MKD,MMK,MNT,MOP,MUR,MVR,MXN,MYR,MZN,NAD,NGN,NIO,NOK,NPR,NZD,OMR,PEN,PGK,PHP,PKR,PLN,PYG,QAR,RON,RSD,RUB,RWF,SAR,SCR,SEK,SGD,STD,SYP,THB,TND,TRY,TTD,TWD,TZS,UAH,UGX,USD,UYU,VEF,VND,VUV,WST,XAF,XBT,XCD,XOF,XPF,ZAR,ZMW' | split: ',' -%}
+  {%- assign supported_codes = settings.supported_currencies | split: ' ' -%}
+  <div class="switcher">
+    <div class="switcher-drop">
+      <div class="inner">
+        <label for="currencies">{{ 'general.multi_currency.pick_a_currency' | t }} </label>
+        <select id="currencies" name="currencies">
+          <option value="{{ shop.currency }}" selected="selected">{{ shop.currency }}</option>
+          {%- for code in supported_codes -%}
+            {%- if code != shop.currency and codes contains code -%}
+              <option value="{{ code }}">{{ code }}</option>
+            {%- endif -%}
+          {%- endfor -%}
+        </select>
+      </div>
+    </div>
+    <div class="switcher-flags">
+      {% include 'currency-flag', code: shop.currency %}
+      {%- for code in supported_codes -%}
+        {%- if code != shop.currency and codes contains code -%}
+          {% include 'currency-flag', code: code %}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+{% endif %}

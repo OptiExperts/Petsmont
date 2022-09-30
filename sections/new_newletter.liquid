@@ -1,0 +1,48 @@
+<div class="signup-div">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+            	<h2 class="h2-heading">{{ section.settings.news_txt}}</h2>
+            </div> 
+        </div>
+        <br>
+      {% form 'customer'%}
+        <form class="form-inline">
+          <input type="text" id="name" placeholder="Enter your first name" name="contact[name]">
+          <input type="email" id="email" placeholder="Enter your email" name="contact[email]">
+          <button class="btn-solid-reg" type="submit">{{section.settings.sign_txt}}</button>
+        </form>
+      {% endform %}
+    </div>
+</div>
+{% schema %}
+  {
+    "name": "Home Newsletter",
+    "settings": [
+		{
+			"type":"text",
+            "id":"news_txt",
+            "label":"Newsletter Heading",
+			"default":"SIGNUP FOR FREE GOODIES!"
+		},
+		{
+			"type":"text",
+            "id":"sign_txt",
+            "label":"Button Text",
+			"default":"SIGN ME UP!"
+		}
+	],
+	"presets": [
+      {
+        "name": "Home Newsletter",
+        "category": "Home Newsletter"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,121 @@
+<div class="footer {% if template contains "index"%}bg-img5 {% else %}bg-img55 {% endif %}">
+    <div class="container">
+		<div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-6">
+              <div class="foot-img new-doot-logo">
+              {% if section.settings.logp != blank %}
+               <img class="img-fluid" src="{{section.settings.logp | img_url:'master'}}" alt="alternative"> 
+				{% else %}
+                   <img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/logo-footer.png?v=1629183168" alt="alternative"> 
+				{% endif %} 
+              </div>
+              <div class="social-container">
+                         <span class="fa-stack">
+                            <a href="{{ settings.social_facebook_url }}"  target="_blank">
+                                <i class="fab fa-facebook-f fa-stack-1x"></i>
+                            </a>
+                        </span>
+                       
+                        <span class="fa-stack">
+                            <a href="{{ settings.social_instagram_url }}"  target="_blank">
+                               
+                                <i class="fab fa-instagram fa-stack-1x"></i>
+                            </a>
+                        </span>
+						<span class="fa-stack">
+                            <a href="{{ settings.social_amazon_url }}"  target="_blank">
+                               
+                                <i class="fab fa-amazon fa-stack-1x"></i>
+                            </a>
+                        </span>
+                        
+                    </div>
+                </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-6">
+                    <ul class="list-unstyled li-space-lg p-small">
+                      {% assign linkdata = linklists[section.settings.footer_link ] %}
+                      {% for link in linkdata.links %}
+                        <li>
+                          <a href="{{link.url}}">
+                            <b> {{link.title}} </b>
+                          </a>
+                        </li>
+                      {% endfor %}
+
+                    </ul>
+                </div>
+
+          <div class="col-lg-3 col-md-3 col-sm-6 col-6">
+                  <ul class="list-unstyled li-space-lg p-small">
+                     {% assign linkdata = linklists[section.settings.footer_link__2 ] %}
+                      {% for link in linkdata.links %}
+                        <li>
+                          <a href="{{link.url}}">
+                           {{link.title}} 
+                          </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div> 
+			 <div class="col-lg-3 col-md-3 col-sm-6">
+				<h6 class="footer-heading"><b>Contact us</b></h6>
+                   <span>  </span>
+
+					<ul class="list-unstyled li-space-lg p-small">
+                      <a href="mailto:{{section.settings.email}}"><li><img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/mail.png?v=1629183064" alt="alternative"> <span class="social-text">{{section.settings.email}}</span></li></a>
+                          <a href="tel:+{{section.settings.phone}}"><li><img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/phone.png?v=1629183079" alt="alternative"> <span class="social-text">{{section.settings.phone}}</span></li></a>
+<!--                         <li><img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/map.png?v=1629183100" alt="alternative"> <span class="social-text">{{section.settings.address}}</span></li>
+					 -->
+                    </ul>
+
+
+                </div>
+            </div>
+     </div>
+</div>
+{% schema %}
+  {
+    "name": "Footer",
+    "settings": [
+		{
+			"type" :"image_picker",
+			"id":"logp",
+			"label":"Add Logo"
+		},
+		{
+			"type" :"link_list",
+			"id":"footer_link",
+			"label":"Add Menu-1"
+		},
+		{
+			"type" :"link_list",
+			"id":"footer_link__2",
+			"label":"Add Menu-2"
+		},
+		{
+			"type" :"text",
+			"id":"email",
+			"label":"Add Email",
+			"default":"support@petsmont.com"
+		},
+        {
+			"type" :"text",
+			"id":"phone",
+			"label":"Add Phone",
+			"default":"(888) 555 4422"
+		},
+        {
+			"type" :"html",
+			"id":"address",
+			"label":"Address",
+			"default":"250 5th St. Columbus, OH 43512"
+		}
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

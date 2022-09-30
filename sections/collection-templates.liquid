@@ -1,0 +1,93 @@
+<div id="details" class="basic-1">
+    <div class="container">
+        <div class="row">
+          {% assign collectiondata = collections[section.settings.collection] %}
+          {% for collection in collectiondata.collections %}
+            <div class="col-lg-4 col-xl-4">
+                <div class="image-container">
+                    <img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/coll-01.png?v=1629792722" alt="alternative">
+                </div> <!-- end of image-container -->
+                <p class="italic-word1">{{collection.title}}</p>
+            </div>
+          {% endfor %}
+          {% comment %}
+            <div class="col-lg-4 col-xl-4">
+               <div class="image-container">
+                    <img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/coll-02_9555e512-3438-4548-a29c-50fb8a004266.png?v=1629792754" alt="alternative">
+                </div> <!-- end of image-container -->
+                <p class="italic-word1">Nutrition</p>
+            </div> <!-- end of col -->
+         
+             <div class="col-lg-4 col-xl-4">
+               <div class="image-container">
+                    <img class="img-fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/coll-03_f2622a23-8efd-4a34-9903-1b3007e8e079.png?v=1629792782" alt="alternative">
+                </div> <!-- end of image-container -->
+                <p class="italic-word1">Well-being</p>
+            </div> <!-- end of col -->
+          {% endcomment %}
+        </div> <!-- end of row -->
+    </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Collection page",
+    "settings": [
+      {
+        "type": "collection",
+        "id": "collection",
+        "label": "Select Collection"
+        
+      },
+      {
+        "type": "checkbox",
+        "id": "show_tags",
+        "label": "Show tags",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "coll_show_sort",
+        "label": "Show sorting dropdown",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "coll_show_feat",
+        "label": "Show 'Featured' option in sorting dropdown",
+        "default": false
+      },
+      {
+        "type": "header",
+        "content": "Header image"
+      },
+      {
+        "type": "paragraph",
+        "content": "Shown on all collection pages"
+      },
+      {
+        "type": "image_picker",
+        "id": "header_image",
+        "label": "Image"
+      },
+      {
+        "type": "header",
+        "content": "Collection-specific header images"
+      },
+      {
+        "type": "checkbox",
+        "id": "head_img_coll_handled",
+        "label": "Enable",
+        "default": false
+      },
+      {
+        "type": "paragraph",
+        "content": "You will need to [upload an image file](\/admin\/settings\/files) with the filename 'collection-header-handle.jpg', where 'handle' is the [handle](http:\/\/docs.shopify.com\/themes\/liquid-variables\/handle) of the collection."
+      },
+      {
+        "type": "paragraph",
+        "content": "If you do this, you will need to upload an image for every collection on your store, or it will encounter missing-file errors."
+      }
+    ]
+  }
+{% endschema %}

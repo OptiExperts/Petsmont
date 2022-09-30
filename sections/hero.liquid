@@ -1,0 +1,99 @@
+<header id="header" class="header">
+        <div class="container-fluid">
+            <div class="row">
+              <div class="col-lg-1 col-xl-1"></div>
+                <div class="col-lg-5 col-xl-5">
+                    <div class="text-container">
+                        <h1 class="h1-large">{% if section.settings.main_heading != blank %} {{section.settings.main_heading}} {% else %}IT’S WHAT PETS WANT {% endif %}</h1>
+                      <p class="p-large">{% if section.settings.main_description != blank %} {{ section.settings.main_description }} {% else %}Health is happiness. Do right by your loved ones with quality, organic products that will help them live their best lives.</p>{% endif %} 
+						
+                      
+                      	<div class="d_italic_text">
+                          	<p class="italic-word">{% if section.settings.italic_description != blank %}{{ section.settings.italic_description }} {% else %}Discover the Petsmont difference.{% endif %}</p>
+                        	 <img class="arrow_img" src="{{ 'home-desktop-banner_arrow.png' | asset_url }}" alt="alternative" >  
+                      	</div>
+						
+						<br>
+                        <a class="btn-solid-lg d-none d-sm-block" href="{{section.settings.btn_url}}">{{ section.settings.btn_txt | upcase}}</a>
+                     
+                    </div>
+                </div> 
+                <div class="col-lg-6 col-xl-6 top-margin desktop-image" style="padding-right:0">
+                    <div class="image-container">
+                        <img class="img-fluid" src="{{section.settings.hero_image | img_url:'master'}}" alt="alternative"> 
+                     
+                      
+                      <!--<img class="img-fluid" src="{{ 'home-desktop-banner_non_arrow.png' | asset_url }}" alt="alternative"/>-->
+                     
+                    </div>
+                  <a class="btn-solid-lg d-block d-sm-none" href="{{section.settings.btn_url}}">{{ section.settings.btn_txt | upcase}}</a>
+                </div>
+               <div class="col-lg-7 col-xl-7 top-margin mobile-image" style="padding-right:0">
+                    <div class="image-container">
+                        <img class="img-fluid" src="{{section.settings.mobile_image | img_url:'master'}}" alt="alternative">
+                    </div>
+                </div>
+              </div>
+          
+        </div> 
+  
+   <div class="container-fluid">
+               <a class="btn-solid-lg d-block d-sm-none" href="{{section.settings.btn_url}}">{{ section.settings.btn_txt | upcase}}</a>
+              
+            </div>
+    </header>
+{% schema %}
+  {
+    "name": "Hero Banner",
+    "settings": [
+		{
+			"type" :"text",
+			"id"   :"main_heading",
+			"label":"Main Heading"
+		},
+		{
+			"type" :"richtext",
+			"id"   :"main_description",
+			"label":"description"
+		},
+		{
+			"type" :"text",
+			"id"   :"italic_description",
+			"label":"Italic Heading"
+		},
+		{
+			"type" :"image_picker",
+			"id"   :"hero_image",
+			"label":"Image for Desktop"
+		},
+		{
+			"type" :"image_picker",
+			"id"   :"mobile_image",
+			"label":"Image for Mobile"
+		},
+		{
+			"type" :"text",
+			"id"   :"btn_txt",
+			"label":"Button Text",
+            "default":"Shop now"
+		},
+		{
+			"type" :"url",
+			"id"   :"btn_url",
+			"label":"Add URL Here"
+		}
+	],
+	"presets": [
+      {
+        "name": "hero Banner",
+        "category": "Hero Banner"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

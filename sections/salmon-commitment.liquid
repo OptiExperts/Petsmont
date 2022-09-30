@@ -1,0 +1,105 @@
+<div class="bg-img11">
+    <div class="container">
+      <div class="width_60">
+        <div class="row">
+            <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6 col-6" style="padding-right:0">
+              <div class="comit_width">
+              {% if section.settings.salmon_lompetitors_our != blank %} <img class="image_fluid" src="{{ section.settings.salmon_lompetitors_our | img_url:'master'}}" /> {% else %}<img class="image_fluid" src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/petmont_Logo_1.png?v=1633414268"/>{% endif %}
+              </div>
+              <div class="pad-30">
+               {% for block in section.blocks %}
+                   {% if block.type == 'petsmont' %}
+                	 <ul class="reason_pets">
+                      <li><img src="{{ block.settings.salmon_petsmont_img | img_url:'master'}}"></li>
+                      <li class="li-text">{{ block.settings.salmon_petsmont_txt}}</li>
+                       </ul>
+                     {% endif %}
+              	
+                {% endfor %}
+              </div>
+            </div>
+            <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6 col-6" style="padding-left:0">
+              <div class="comit_width">
+              <h4>{{ section.settings.salmon_lompetitors_text | upcase }}</h4>
+              </div>
+              <div class="pad-30">
+                  {% for block in section.blocks %}
+                    {% if block.type == "competitors" %}
+                     <ul class="reason_pets">
+                          <li><img src="{{ block.settings.salmon_petsmont_crose | img_url:'master'}}"></li>
+                          <li class="li-text"> {{ block.settings.salmon_competitors_txt }} </li>
+                      </ul>
+                 {% endif %}
+                {% endfor %}
+
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="dog_60 d_dog_img">
+<!--         <img src="https://cdn.shopify.com/s/files/1/0284/2391/3547/files/pro-dog.png?v=1630064199"/> -->
+         <img src="{{'product-desktop-final.png' | asset_url }}"/>
+      </div>
+    </div> 
+</div>
+{% schema %}
+  {
+    "name": " Salmon Our Competitors",
+    "settings": [
+      {
+			"type" :"image_picker",
+			"id" :"salmon_lompetitors_our",
+			"label":"Add Logo"
+		},
+	    {
+			"type": "text",
+			"id" :"salmon_lompetitors_text",
+			"label":" Heading",
+			"default":"OUR COMPETITORS"
+		}
+     ],
+	"blocks":[
+		{
+			"type":"petsmont",
+			"name":"Petsmont",
+			"settings":[
+			   {
+                "type": "text",
+			    "id" :"salmon_petsmont_txt",
+			    "label":"Petsmont Text"
+			   },
+               {
+                "type": "image_picker",
+			    "id" :"salmon_petsmont_img",
+			    "label":"Tick Icon"
+			   }
+			]
+
+		},
+       {
+			"type":"competitors",
+			"name":"Competitors",
+			"settings":[
+			   {
+                "type": "text",
+			    "id" :"salmon_competitors_txt",
+			    "label":"Competitors Text"
+			   },
+              {
+                "type": "image_picker",
+			    "id" :"salmon_petsmont_crose",
+			    "label":"Crosse Icon"
+			   }
+			]
+		}
+       
+        
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

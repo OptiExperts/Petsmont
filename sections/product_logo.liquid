@@ -1,0 +1,55 @@
+{%- if section.settings.showproductcare -%}
+<div class="find-us1">
+	<div class="container">
+	<span>{{ section.settings.logo_heading12}}</span>
+	<br><br>
+       <div class="fivehide">
+      {% for block in section.blocks %}
+      <img class="img-fluid" src="{{ block.settings.add_image12 | img_url:'master'}}" alt="alternative">
+	
+      {% endfor %}
+      </div>
+
+  </div>
+</div>
+{%- endif -%}
+{% schema %}
+  {
+    "name": "Logo",
+    "settings": [
+	{	
+		"type": "checkbox",
+        "id": "showproductcare",
+        "label": "Enable Section",
+        "default": true
+	 },
+		{
+		  "type":"text",
+		  "id" :"logo_heading12",
+		  "label":"Heading",
+		 "default":"WHERE YOU CAN FIND US"	
+		}
+	],
+	"blocks" :[
+		{
+			"type" :"logo",
+			"name" :"Add Logo",
+			"limit":5,
+			"settings":[
+			   {
+				 "type" :"image_picker",
+				 "id" :"add_image12",
+				 "label":"Add Logo"
+				 
+			   }
+			]
+		}
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

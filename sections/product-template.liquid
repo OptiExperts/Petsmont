@@ -79,19 +79,8 @@
                   </p>
                   {% endif %}
                 </div>
-                <!--                 <span class="price-item price-item--regular" data-regular-price>
-{% if product.available %}
-{% if product.compare_at_price > price %}
-{{ product.compare_at_price | money }}
-{% else %}
-{{ money_price }}
-{% endif %}
-{% else %}
-{{ 'products.product.sold_out' | t }}
-{% endif %}
-</span> -->
               </div>
-              {%- include 'subscription-product' -%}
+
               <div>
 
                 {%- if section.settings.show_tax_and_shipping -%}
@@ -181,13 +170,13 @@
                   {% endif%}
                 </div>
 
-                <!--               <select name="id" data-productid="{{ product.id }}" class="original-selector" aria-label="{{ 'products.product.selector_label' | t | escape }}">
-{% for variant in product.variants %}
-<option value="{{ variant.id }}" {% if variant == product.selected_or_first_available_variant %} selected="selected"{% endif %} data-stock="{% if variant.inventory_management == 'shopify' and variant.inventory_quantity <= 0 %}out{% endif %}">{{ variant.title | escape }}</option>
-{% endfor %}
-</select> -->
+                <select name="id" data-productid="{{ product.id }}" class="original-selector" aria-label="{{ 'products.product.selector_label' | t | escape }}">
+                {% for variant in product.variants %}
+                <option value="{{ variant.id }}" {% if variant == product.selected_or_first_available_variant %} selected="selected"{% endif %} data-stock="{% if variant.inventory_management == 'shopify' and variant.inventory_quantity <= 0 %}out{% endif %}">{{ variant.title | escape }}</option>
+                {% endfor %}
+                </select>
 
-                <!-- <div class="rc-widget-injection-parent"></div> -->
+                <div class="rc-widget-injection-parent"></div>
                 <div class="quadd-wrapper {% if section.settings.enable_payment_button %}quadd-wrapper--with-payment-button{% endif %}">
 
                   <div class="quantity-area">
@@ -199,13 +188,13 @@
                   </div>
 
 
-                  <!--                 <div class="rc-widget-injection-parent"></div> -->
+                  <div class="rc-widget-injection-parent"></div>
                   <div class="product-add">
                     <button  name="checkoutty" class="add-to-cart">BUY IT NOW</button>
-                    <!--                   <button class="btn-solid-reg  button {% if section.settings.enable_payment_button %}button--alt{% endif %}" name="add" id="add" type="submit">{{ 'products.product.add_to_cart' | t }}</button>
-{% if section.settings.enable_payment_button %}
-{{ form | payment_button }}
-{% endif %} -->
+                    <button class="btn-solid-reg  button {% if section.settings.enable_payment_button %}button--alt{% endif %}" name="add" id="add" type="submit">{{ 'products.product.add_to_cart' | t }}</button>
+                    {% if section.settings.enable_payment_button %}
+                    {{ form | payment_button }}
+                    {% endif %} 
                   </div>
                   <div class="ultimate-badges"></div>
                 </div>

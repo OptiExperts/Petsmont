@@ -2590,6 +2590,10 @@ h2.h2-heading.reccom {
   border: 0px;
 }
 
+.reload-icon[data-v-21f97838] {
+  color: black !important;
+}
+
 .product-form .product-add {
   margin: 20px 0
 }

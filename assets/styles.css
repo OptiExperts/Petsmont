@@ -2548,7 +2548,7 @@ label.rc-radio.rc-option__onetime.rc-option.rc_widget__option.rc_widget__option-
 }
 
 .rc-template__button-group .rc-radio.rc-option--active {
-  box-shadow: none
+  
 }
 
 .rc-template__button-group .rc-radio:first-child {
@@ -2558,15 +2558,15 @@ label.rc-radio.rc-option__onetime.rc-option.rc_widget__option.rc_widget__option-
 }
 
 span.rc_popup__label {
-  display: none
+  
 }
 
 label.rc-selling-plans__label {
-  display: none
+  
 }
 
 .none_border {
-  border: none
+ 
 }
 
 h2.h2-heading.reccom {

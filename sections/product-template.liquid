@@ -116,24 +116,24 @@
               {%- endif -%}
 
               <!--             {% if section.settings.description_position == 'up' %}
-<div class="product-description rte spaced-row-bottom">
-{% if product.available %}
-{% comment %}
-<div class="custom-center">
-<button class="button custom-center {% if section.settings.enable_payment_button %}button--alt{% endif %}" name="add" id="add" type="submit">{{ 'products.product.add_to_cart' | t }}</button>
-</div>
-{% endcomment %}
-{% endif %}
-{{ product.description |split: '</h3>' | last}}</div>
-{% endif %} -->
+              <div class="product-description rte spaced-row-bottom">
+              {% if product.available %}
+              {% comment %}
+              <div class="custom-center">
+              <button class="button custom-center {% if section.settings.enable_payment_button %}button--alt{% endif %}" name="add" id="add" type="submit">{{ 'products.product.add_to_cart' | t }}</button>
+              </div>
+              {% endcomment %}
+              {% endif %}
+              {{ product.description |split: '</h3>' | last}}</div>
+              {% endif %} -->
               <!-- 			<div class="dmobilediv">
-{% for media in product.media limit:1%}
+              {% for media in product.media limit:1%}
 
-<img class="img-fluid" src="{{ product.featured_image | product_img_url: 'large' }}" alt="alternative">
+              <img class="img-fluid" src="{{ product.featured_image | product_img_url: 'large' }}" alt="alternative">
 
-{% endfor %}
+              {% endfor %}
 
-</div> -->
+              </div> -->
               {% if product.available %}
               <div class="product-form">
                 {% if section.settings.prod_show_sku %}

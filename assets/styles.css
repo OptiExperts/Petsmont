@@ -2586,8 +2586,8 @@ h2.h2-heading.reccom {
 }
 
 .rc-template__button-group .rc-radio.rc-option--active {
-  box-shadow: none;
-  border: 0
+  
+  border: 0px;
 }
 
 .product-form .product-add {
@@ -2599,7 +2599,7 @@ h2.h2-heading.reccom {
 }
 
 .rc_popup {
-  display: none!important
+  display: block !important
 }
 
 .large_form input,

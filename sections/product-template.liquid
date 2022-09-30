@@ -191,10 +191,12 @@
                   <div class="rc-widget-injection-parent"></div>
                   <div class="product-add">
                     <button  name="checkoutty" class="add-to-cart">BUY IT NOW</button>
+                    {%- comment -%}
                     <button class="btn-solid-reg  button {% if section.settings.enable_payment_button %}button--alt{% endif %}" name="add" id="add" type="submit">{{ 'products.product.add_to_cart' | t }}</button>
                     {% if section.settings.enable_payment_button %}
                     {{ form | payment_button }}
                     {% endif %} 
+                    {%- endcomment -%}
                   </div>
                   <div class="ultimate-badges"></div>
                 </div>
